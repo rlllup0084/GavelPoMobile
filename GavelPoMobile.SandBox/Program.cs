@@ -50,6 +50,10 @@ public class Program {
         });
 
         // GetPODetailsById
+        app.MapGet("api/detail/{id}", async ([FromServicesAttribute] GVLLOCALContextProcedures db, int id) => {
+            var op = new OutputParameter<int>();
+            return await db.GetPODetailsByIdAsync(id, op);
+        });
 
         // GetPOPastApprovals
 

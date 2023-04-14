@@ -17,6 +17,6 @@ namespace GavelPoMobile.SandBox.Data
         Task<GetOrdersInfiniteResponse> GetOrdersInfiniteAsync(int? status, int? page, int? pageSize, CancellationToken cancellationToken = default);
         Task<GetOrdersPaginationResponse> GetOrdersPaginationAsync(int? status, int? page, int? pageSize, CancellationToken cancellationToken = default);
         Task<List<GetPODetailsByIdResult>> GetPODetailsByIdAsync(int? genJournalId, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<GetPOPastApprovalsResult>> GetPOPastApprovalsAsync(int? page, int? pageSize, OutputParameter<int?> totalPages, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<GetPOPastApprovalsResponse> GetPOPastApprovalsAsync(int? page, int? pageSize, CancellationToken cancellationToken = default);
     }
 }

@@ -56,6 +56,9 @@ public class Program {
         });
 
         // GetPOPastApprovals
+        app.MapGet("api/order/past", async ([FromServicesAttribute] GVLLOCALContextProcedures db, int page, int pageSize) => {
+            return await db.GetPOPastApprovalsAsync(page, pageSize);
+        });
 
         #endregion
 

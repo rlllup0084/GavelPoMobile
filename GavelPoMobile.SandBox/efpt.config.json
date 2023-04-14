@@ -1,0 +1,61 @@
+﻿{
+   "CodeGenerationMode": 3,
+   "ContextClassName": "GVLLOCALContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": true,
+   "ModelNamespace": null,
+   "OutputContextPath": "Data",
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "GavelPoMobile.SandBox",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[GetOrderById]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetOrders]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetOrdersInfinite]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetOrdersPagination]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetPODetailsById]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetPOPastApprovals]",
+         "ObjectType": 1
+      }
+   ],
+   "UiHint": "LAPTOP-RVIIQF5D.GVLLOCAL",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": true,
+   "UseNoDefaultConstructor": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

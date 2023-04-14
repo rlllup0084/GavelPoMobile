@@ -161,23 +161,15 @@ namespace GavelPoMobile.SandBox.Data
             return _;
         }
 
-        public virtual async Task<List<GetOrdersInfiniteResult>> GetOrdersInfiniteAsync(int? status, int? page, int? pageSize, OutputParameter<int?> totalPages, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
-        {
-            var parametertotalPages = new SqlParameter
-            {
+        public virtual async Task<GetOrdersInfiniteResponse> GetOrdersInfiniteAsync(int? status, int? page, int? pageSize, CancellationToken cancellationToken = default) {
+            var parametertotalPages = new SqlParameter {
                 ParameterName = "totalPages",
                 Direction = System.Data.ParameterDirection.InputOutput,
-                Value = totalPages?._value ?? Convert.DBNull,
-                SqlDbType = System.Data.SqlDbType.Int,
-            };
-            var parameterreturnValue = new SqlParameter
-            {
-                ParameterName = "returnValue",
-                Direction = System.Data.ParameterDirection.Output,
+                Value = 0,
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -198,27 +190,31 @@ namespace GavelPoMobile.SandBox.Data
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parametertotalPages,
-                parameterreturnValue,
             };
-            var _ = await _context.SqlQueryAsync<GetOrdersInfiniteResult>("EXEC @returnValue = [dbo].[GetOrdersInfinite] @status, @page, @pageSize, @totalPages OUTPUT", sqlParameters, cancellationToken);
 
-            totalPages.SetValue(parametertotalPages.Value);
-            returnValue?.SetValue(parameterreturnValue.Value);
+            var results = await _context.SqlQueryAsync<GetOrdersInfiniteResult>("EXEC [dbo].[GetOrdersInfinite] @status, @page, @pageSize, @totalPages OUTPUT", sqlParameters, cancellationToken);
+            var totalPages = (int)parametertotalPages.Value;
 
-            return _;
+            return new GetOrdersInfiniteResponse {
+                Page = page ?? 0,
+                PageSize = pageSize ?? 0,
+                TotalPages = totalPages,
+                Results = results,
+            };
         }
 
-        public virtual async Task<List<GetOrdersPaginationResult>> GetOrdersPaginationAsync(int? status, int? page, int? pageSize, OutputParameter<int?> totalPages, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+
+        public virtual async Task<GetOrdersPaginationResponse> GetOrdersPaginationAsync(int? status, int? page, int? pageSize, CancellationToken cancellationToken = default)
         {
             var parametertotalPages = new SqlParameter
             {
                 ParameterName = "totalPages",
                 Direction = System.Data.ParameterDirection.InputOutput,
-                Value = totalPages?._value ?? Convert.DBNull,
+                Value = 0,
                 SqlDbType = System.Data.SqlDbType.Int,
             };
-            var parameterreturnValue = new SqlParameter
-            {
+
+            var parameterreturnValue = new SqlParameter {
                 ParameterName = "returnValue",
                 Direction = System.Data.ParameterDirection.Output,
                 SqlDbType = System.Data.SqlDbType.Int,
@@ -247,12 +243,16 @@ namespace GavelPoMobile.SandBox.Data
                 parametertotalPages,
                 parameterreturnValue,
             };
-            var _ = await _context.SqlQueryAsync<GetOrdersPaginationResult>("EXEC @returnValue = [dbo].[GetOrdersPagination] @status, @page, @pageSize, @totalPages OUTPUT", sqlParameters, cancellationToken);
 
-            totalPages.SetValue(parametertotalPages.Value);
-            returnValue?.SetValue(parameterreturnValue.Value);
+            var results = await _context.SqlQueryAsync<GetOrdersPaginationResult>("EXEC @returnValue = [dbo].[GetOrdersPagination] @status, @page, @pageSize, @totalPages OUTPUT", sqlParameters, cancellationToken);
+            var totalPages = (int)parametertotalPages.Value;
 
-            return _;
+            return new GetOrdersPaginationResponse {
+                Page = page ?? 0,
+                PageSize = pageSize ?? 0,
+                TotalPages = totalPages,
+                Results = results,
+            };
         }
 
         public virtual async Task<List<GetPODetailsByIdResult>> GetPODetailsByIdAsync(int? genJournalId, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)

@@ -35,6 +35,11 @@ public class Program {
         });
 
         // GetOrderInfinite
+        app.MapGet("api/order/infinite/{status}", async ([FromServicesAttribute] GVLLOCALContextProcedures db, int status, int page, int pageSize) => {
+            var tp = new OutputParameter<int?>();
+            var rv = new OutputParameter<int>();
+            return await db.GetOrdersInfiniteAsync(status, page, pageSize, tp, rv);
+        });
 
         // GetOrdersPagination
 

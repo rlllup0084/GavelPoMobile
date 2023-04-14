@@ -113,6 +113,7 @@ namespace GavelPoMobile.SandBox.Data
                 },
                 parameterreturnValue,
             };
+
             var _ = await _context.SqlQueryAsync<GetOrderByIdResult>("EXEC @returnValue = [dbo].[GetOrderById] @orderId", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
@@ -120,13 +121,13 @@ namespace GavelPoMobile.SandBox.Data
             return _;
         }
 
-        public virtual async Task<List<GetOrdersResult>> GetOrdersAsync(int? page, int? pageSize, OutputParameter<int?> totalPages, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<GetOrdersResponse> GetOrdersAsync(int? page, int? pageSize, CancellationToken cancellationToken = default)
         {
             var parametertotalPages = new SqlParameter
             {
                 ParameterName = "totalPages",
                 Direction = System.Data.ParameterDirection.InputOutput,
-                Value = totalPages?._value ?? Convert.DBNull,
+                Value = 0,
                 SqlDbType = System.Data.SqlDbType.Int,
             };
             var parameterreturnValue = new SqlParameter
@@ -153,12 +154,15 @@ namespace GavelPoMobile.SandBox.Data
                 parametertotalPages,
                 parameterreturnValue,
             };
-            var _ = await _context.SqlQueryAsync<GetOrdersResult>("EXEC @returnValue = [dbo].[GetOrders] @page, @pageSize, @totalPages OUTPUT", sqlParameters, cancellationToken);
-
-            totalPages.SetValue(parametertotalPages.Value);
-            returnValue?.SetValue(parameterreturnValue.Value);
-
-            return _;
+            var results = await _context.SqlQueryAsync<GetOrdersResult>("EXEC @returnValue = [dbo].[GetOrders] @page, @pageSize, @totalPages OUTPUT", sqlParameters, cancellationToken);
+            var totalPages = (int)parametertotalPages.Value;
+            
+            return new GetOrdersResponse {
+                Page = page ?? 0,
+                PageSize = pageSize ?? 0,
+                TotalPages = totalPages,
+                Results = results,
+            };
         }
 
         public virtual async Task<GetOrdersInfiniteResponse> GetOrdersInfiniteAsync(int? status, int? page, int? pageSize, CancellationToken cancellationToken = default) {

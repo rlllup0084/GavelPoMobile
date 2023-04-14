@@ -45,6 +45,9 @@ public class Program {
         });
 
         // GetOrders
+        app.MapGet("api/order", async ([FromServicesAttribute] GVLLOCALContextProcedures db, int page, int pageSize) => {
+            return await db.GetOrdersAsync(page, pageSize);
+        });
 
         // GetPODetailsById
 

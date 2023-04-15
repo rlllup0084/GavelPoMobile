@@ -16,5 +16,6 @@ namespace GavelPoMobile.SandBox.Models
         public string SourceNo { get; set; }
         public DateTime? EntryDate { get; set; }
         public string VendorName { get; set; }
+        public List<GetPODetailsByIdResult> Details { get; set; }
     }
 }

@@ -35,53 +35,59 @@ namespace GavelPoMobile.SandBox.Data
 
         protected void OnModelCreatingGeneratedProcedures(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<GetOrderByIdResult>(entity => { 
-                entity.HasNoKey()
-                .ToView(null)
-                .Property(o => o.Total).HasColumnType("money").HasPrecision(2);
-            });
-                
-
-            modelBuilder.Entity<GetOrdersResult>(entity => {
+            modelBuilder.Entity<GetOrderByIdResult>(entity =>
+            {
                 entity.HasNoKey()
                 .ToView(null)
                 .Property(o => o.Total).HasColumnType("money").HasPrecision(2);
             });
 
 
-            modelBuilder.Entity<GetOrdersInfiniteResult>(entity => {
+            modelBuilder.Entity<GetOrdersResult>(entity =>
+            {
                 entity.HasNoKey()
                 .ToView(null)
                 .Property(o => o.Total).HasColumnType("money").HasPrecision(2);
             });
 
 
-            modelBuilder.Entity<GetOrdersPaginationResult>(entity => {
+            modelBuilder.Entity<GetOrdersInfiniteResult>(entity =>
+            {
                 entity.HasNoKey()
                 .ToView(null)
                 .Property(o => o.Total).HasColumnType("money").HasPrecision(2);
             });
 
 
-            modelBuilder.Entity<GetPODetailsByIdResult>(entity => {
+            modelBuilder.Entity<GetOrdersPaginationResult>(entity =>
+            {
+                entity.HasNoKey()
+                .ToView(null)
+                .Property(o => o.Total).HasColumnType("money").HasPrecision(2);
+            });
+
+
+            modelBuilder.Entity<GetPODetailsByIdResult>(entity =>
+            {
                 entity.HasNoKey().ToView(null);
 
                 entity.Property(o => o.Total)
                     .HasColumnType("money")
                     .HasPrecision(2);
-                            entity.Property(o => o.Quantity)
-                                .HasColumnType("money")
-                                .HasPrecision(2);
+                entity.Property(o => o.Quantity)
+                    .HasColumnType("money")
+                    .HasPrecision(2);
                 entity.Property(o => o.Cost)
                     .HasColumnType("money")
                     .HasPrecision(2);
-                        });
+            });
 
-            modelBuilder.Entity<GetPOPastApprovalsResult>(entity => {
+            modelBuilder.Entity<GetPOPastApprovalsResult>(entity =>
+            {
                 entity.HasNoKey()
                 .ToView(null)
                 .Property(o => o.Total).HasColumnType("money").HasPrecision(2);
-            });            
+            });
         }
     }
 
@@ -94,7 +100,7 @@ namespace GavelPoMobile.SandBox.Data
             _context = context;
         }
 
-        public virtual async Task<List<GetOrderByIdResult>> GetOrderByIdAsync(int? orderId, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<GetOrderByIdResult> GetOrderByIdAsync(int? orderId, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -103,7 +109,7 @@ namespace GavelPoMobile.SandBox.Data
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -114,11 +120,59 @@ namespace GavelPoMobile.SandBox.Data
                 parameterreturnValue,
             };
 
-            var _ = await _context.SqlQueryAsync<GetOrderByIdResult>("EXEC @returnValue = [dbo].[GetOrderById] @orderId", sqlParameters, cancellationToken);
+            var orderResult = await _context.SqlQueryAsync<GetOrderByIdResult>("EXEC @returnValue = [dbo].[GetOrderById] @orderId", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
-            return _;
+            var order = orderResult.Select(r => r).FirstOrDefault();
+
+            if (order == null)
+            {
+                return null;
+            }
+
+            var sqlParamGenJournalId = new[]
+            {
+                new SqlParameter
+                {
+                    ParameterName = "genJournalId",
+                    Value = orderId ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+
+            var detailsResult = await _context.SqlQueryAsync<GetPODetailsByIdResult>("EXEC @returnValue = [dbo].[GetPODetailsById] @genJournalId", sqlParamGenJournalId, cancellationToken);
+
+            var details = detailsResult.ToList();
+
+            return new GetOrderByIdResult
+            {
+                OID = order.OID,
+                ReferenceNo = order.ReferenceNo,
+                Status = order.Status,
+                Remarks = order.Remarks,
+                Total = order.Total,
+                VendorOID = order.VendorOID,
+                SourceNo = order.SourceNo,
+                EntryDate = order.EntryDate,
+                VendorName = order.VendorName,
+                Details = details.Select(d => new GetPODetailsByIdResult
+                {
+                    OID = d.OID,
+                    SourceNo = d.SourceNo,
+                    GenJournalID = d.GenJournalID,
+                    Description = d.Description,
+                    Quantity = d.Quantity,
+                    UOM = d.UOM,
+                    Cost = d.Cost,
+                    CostCenter = d.CostCenter,
+                    RequestedBy = d.RequestedBy,
+                    Total = d.Total,
+                    LineApprovalStatus = d.LineApprovalStatus,
+                    Remarks = d.Remarks
+                }).ToList()
+            };
         }
 
         public virtual async Task<GetOrdersResponse> GetOrdersAsync(int? page, int? pageSize, CancellationToken cancellationToken = default)
@@ -137,7 +191,7 @@ namespace GavelPoMobile.SandBox.Data
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -156,8 +210,9 @@ namespace GavelPoMobile.SandBox.Data
             };
             var results = await _context.SqlQueryAsync<GetOrdersResult>("EXEC @returnValue = [dbo].[GetOrders] @page, @pageSize, @totalPages OUTPUT", sqlParameters, cancellationToken);
             var totalPages = (int)parametertotalPages.Value;
-            
-            return new GetOrdersResponse {
+
+            return new GetOrdersResponse
+            {
                 Page = page ?? 0,
                 PageSize = pageSize ?? 0,
                 TotalPages = totalPages,
@@ -165,8 +220,10 @@ namespace GavelPoMobile.SandBox.Data
             };
         }
 
-        public virtual async Task<GetOrdersInfiniteResponse> GetOrdersInfiniteAsync(int? status, int? page, int? pageSize, CancellationToken cancellationToken = default) {
-            var parametertotalPages = new SqlParameter {
+        public virtual async Task<GetOrdersInfiniteResponse> GetOrdersInfiniteAsync(int? status, int? page, int? pageSize, CancellationToken cancellationToken = default)
+        {
+            var parametertotalPages = new SqlParameter
+            {
                 ParameterName = "totalPages",
                 Direction = System.Data.ParameterDirection.InputOutput,
                 Value = 0,
@@ -199,7 +256,8 @@ namespace GavelPoMobile.SandBox.Data
             var results = await _context.SqlQueryAsync<GetOrdersInfiniteResult>("EXEC [dbo].[GetOrdersInfinite] @status, @page, @pageSize, @totalPages OUTPUT", sqlParameters, cancellationToken);
             var totalPages = (int)parametertotalPages.Value;
 
-            return new GetOrdersInfiniteResponse {
+            return new GetOrdersInfiniteResponse
+            {
                 Page = page ?? 0,
                 PageSize = pageSize ?? 0,
                 TotalPages = totalPages,
@@ -218,13 +276,14 @@ namespace GavelPoMobile.SandBox.Data
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var parameterreturnValue = new SqlParameter {
+            var parameterreturnValue = new SqlParameter
+            {
                 ParameterName = "returnValue",
                 Direction = System.Data.ParameterDirection.Output,
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -251,7 +310,8 @@ namespace GavelPoMobile.SandBox.Data
             var results = await _context.SqlQueryAsync<GetOrdersPaginationResult>("EXEC @returnValue = [dbo].[GetOrdersPagination] @status, @page, @pageSize, @totalPages OUTPUT", sqlParameters, cancellationToken);
             var totalPages = (int)parametertotalPages.Value;
 
-            return new GetOrdersPaginationResponse {
+            return new GetOrdersPaginationResponse
+            {
                 Page = page ?? 0,
                 PageSize = pageSize ?? 0,
                 TotalPages = totalPages,
@@ -268,7 +328,7 @@ namespace GavelPoMobile.SandBox.Data
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -301,7 +361,7 @@ namespace GavelPoMobile.SandBox.Data
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -321,7 +381,8 @@ namespace GavelPoMobile.SandBox.Data
             var results = await _context.SqlQueryAsync<GetPOPastApprovalsResult>("EXEC @returnValue = [dbo].[GetPOPastApprovals] @page, @pageSize, @totalPages OUTPUT", sqlParameters, cancellationToken);
             var totalPages = (int)parametertotalPages.Value;
 
-            return new GetPOPastApprovalsResponse {
+            return new GetPOPastApprovalsResponse
+            {
                 Page = page ?? 0,
                 PageSize = pageSize ?? 0,
                 TotalPages = totalPages,

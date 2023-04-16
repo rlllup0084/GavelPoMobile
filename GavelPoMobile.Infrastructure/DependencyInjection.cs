@@ -18,8 +18,7 @@ public static class DependencyInjection {
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         ConfigurationManager configuration) {
-        services.AddAuth(configuration)
-            .AddPersistence(configuration);
+        services.AddPersistence(configuration);
 
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
@@ -37,28 +36,29 @@ public static class DependencyInjection {
         return services;
     }
 
-    public static IServiceCollection AddAuth(
-    this IServiceCollection services,
-    ConfigurationManager configuration) {
-        var JwtSettings = new JwtSettings();
-        configuration.Bind(JwtSettings.SectionName, JwtSettings);
+    // TODO: Add this back in when we have a JWT token generator
+    // public static IServiceCollection AddAuth(
+    // this IServiceCollection services,
+    // ConfigurationManager configuration) {
+    //     var JwtSettings = new JwtSettings();
+    //     configuration.Bind(JwtSettings.SectionName, JwtSettings);
 
-        services.AddSingleton(Options.Create(JwtSettings));
-        services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+    //     services.AddSingleton(Options.Create(JwtSettings));
+    //     services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
-        services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(
-                options => options.TokenValidationParameters =
-                    new TokenValidationParameters {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = JwtSettings.Issuer,
-                        ValidAudience = JwtSettings.Audience,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtSettings.Secret)),
-                    });
+    //     services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
+    //         .AddJwtBearer(
+    //             options => options.TokenValidationParameters =
+    //                 new TokenValidationParameters {
+    //                     ValidateIssuer = true,
+    //                     ValidateAudience = true,
+    //                     ValidateLifetime = true,
+    //                     ValidateIssuerSigningKey = true,
+    //                     ValidIssuer = JwtSettings.Issuer,
+    //                     ValidAudience = JwtSettings.Audience,
+    //                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtSettings.Secret)),
+    //                 });
 
-        return services;
-    }
+    //     return services;
+    // }
 }

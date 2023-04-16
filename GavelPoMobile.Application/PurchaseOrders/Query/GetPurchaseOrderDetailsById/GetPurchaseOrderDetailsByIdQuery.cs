@@ -5,4 +5,4 @@ using MediatR;
 namespace GavelPoMobile.Application.PurchaseOrders.Query.GetPurchaseOrderDetailsById;
 public record GetPurchaseOrderDetailsByIdQuery(
     int Id
-    ) : IRequest<ErrorOr<PurchaseOrderDetailResponse>>;
+    ) : IRequest<ErrorOr<List<PurchaseOrderDetailResponse>>>;

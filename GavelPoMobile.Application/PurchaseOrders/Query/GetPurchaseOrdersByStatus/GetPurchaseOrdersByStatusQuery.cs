@@ -4,7 +4,7 @@ using MediatR;
 
 namespace GavelPoMobile.Application.PurchaseOrders.Query.GetPurchaseOrdersByStatus;
 public record GetPurchaseOrdersByStatusQuery(
-    int? status,
+    int? Status,
     int? Page,
     int? PageSize
     ) : IRequest<ErrorOr<PurchaseOrderResponse>>;

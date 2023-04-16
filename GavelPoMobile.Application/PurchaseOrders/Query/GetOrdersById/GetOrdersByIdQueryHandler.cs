@@ -17,7 +17,7 @@ public class GetOrdersByIdQueryHandler : IRequestHandler<GetOrdersByIdQuery, Err
     public async Task<ErrorOr<PurchaseOrderByIdResponse>> Handle(GetOrdersByIdQuery request, CancellationToken cancellationToken) {
         await Task.CompletedTask;
 
-        PurchaseOrder purchaseOrder = _purchaseOrderRepository.GetPurchaseOrderById(request.Id);
+        PurchaseOrder purchaseOrder = await _purchaseOrderRepository.GetPurchaseOrderById(request.Id);
 
         if (purchaseOrder == null) {
             return new[] { Errors.PurchaseOrder.PurchaseOrderNotFound };

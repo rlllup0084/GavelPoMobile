@@ -17,7 +17,7 @@ public class GetPurchaseOrdersByStatusQueryHandler : IRequestHandler<GetPurchase
     public async Task<ErrorOr<PurchaseOrderResponse>> Handle(GetPurchaseOrdersByStatusQuery request, CancellationToken cancellationToken) {
         await Task.CompletedTask;
 
-        PagedPurchaseOrders pagedPurchaseOrders = _purchaseOrderRepository.GetPurchaseOrdersByStatus(request.status, request.Page, request.PageSize);
+        PagedPurchaseOrders pagedPurchaseOrders = await _purchaseOrderRepository.GetPurchaseOrdersByStatus(request.Status, request.Page, request.PageSize);
 
         if (pagedPurchaseOrders == null) {
             return new[] { Errors.PurchaseOrder.NoPurchaseOrdersFound };

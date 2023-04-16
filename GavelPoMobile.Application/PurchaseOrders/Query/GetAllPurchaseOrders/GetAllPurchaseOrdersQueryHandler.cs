@@ -17,15 +17,15 @@ public class GetAllPurchaseOrdersQueryHandler : IRequestHandler<GetAllPurchaseOr
     public async Task<ErrorOr<PurchaseOrderResponse>> Handle(GetAllPurchaseOrdersQuery request, CancellationToken cancellationToken) {
         await Task.CompletedTask;
 
-        PagedPurchaseOrders pagedPurchaseOrders = _purchaseOrderRepository.GetAllPurchaseOrders(request.Page, request.PageSize);
+        PagedPurchaseOrders pagedPurchaseOrders = await _purchaseOrderRepository.GetAllPurchaseOrders(request.Page, request.PageSize);
 
         if (pagedPurchaseOrders == null) {
             return new[] { Errors.PurchaseOrder.NoPurchaseOrdersFound };
         }
 
         return new PurchaseOrderResponse(pagedPurchaseOrders.Page,
-                                          pagedPurchaseOrders.PageSize,
-                                          pagedPurchaseOrders.PageSize,
-                                          pagedPurchaseOrders.PurchaseOrders.ToList());
+                                         pagedPurchaseOrders.PageSize,
+                                         pagedPurchaseOrders.TotalPages,
+                                         pagedPurchaseOrders.PurchaseOrders.ToList());
     }
 }

@@ -15,27 +15,29 @@ public class JwtTokenGenerator : IJwtTokenGenerator {
         _dateTimeProvider = dateTimeProvider;
         _jwtSettings = jwtOptions.Value;
     }
-    public string GenerateToken(User user) {
-        var siginingCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
-                    SecurityAlgorithms.HmacSha256);
 
-        var claims = new[]
-        {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
-                new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        };
+    // TODO: Later on when User is implemented, use the User object to generate the token.
+    //public string GenerateToken(User user) {
+    //    var siginingCredentials = new SigningCredentials(
+    //            new SymmetricSecurityKey(
+    //                Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
+    //                SecurityAlgorithms.HmacSha256);
 
-        var securitytoken = new JwtSecurityToken(
-            issuer: _jwtSettings.Issuer,
-            audience: _jwtSettings.Audience,
-            expires: _dateTimeProvider.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
-            claims: claims,
-            signingCredentials: siginingCredentials);
+    //    var claims = new[]
+    //    {
+    //            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+    //            new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
+    //            new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
+    //            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+    //    };
 
-        return new JwtSecurityTokenHandler().WriteToken(securitytoken);
-    }
+    //    var securitytoken = new JwtSecurityToken(
+    //        issuer: _jwtSettings.Issuer,
+    //        audience: _jwtSettings.Audience,
+    //        expires: _dateTimeProvider.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
+    //        claims: claims,
+    //        signingCredentials: siginingCredentials);
+
+    //    return new JwtSecurityTokenHandler().WriteToken(securitytoken);
+    //}
 }

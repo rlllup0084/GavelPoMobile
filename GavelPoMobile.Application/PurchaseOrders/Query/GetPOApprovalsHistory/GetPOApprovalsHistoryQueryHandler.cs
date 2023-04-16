@@ -18,7 +18,7 @@ public class GetPOApprovalsHistoryQueryHandler : IRequestHandler<GetAllPurchaseO
     public async Task<ErrorOr<PurchaseOrderResponse>> Handle(GetAllPurchaseOrdersQuery request, CancellationToken cancellationToken) {
         await Task.CompletedTask;
 
-        PagedPurchaseOrders pagedPurchaseOrders = _purchaseOrderRepository.GetPOApprovalsHistory(request.Page, request.PageSize);
+        PagedPurchaseOrders pagedPurchaseOrders = await _purchaseOrderRepository.GetPOApprovalsHistory(request.Page, request.PageSize);
 
         if (pagedPurchaseOrders == null) {
             return new[] { Errors.PurchaseOrder.NoPurchaseOrdersFound };

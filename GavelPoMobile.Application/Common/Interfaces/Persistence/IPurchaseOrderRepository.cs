@@ -4,9 +4,9 @@ using GavelPoMobile.Domain.Aggregates.Entities;
 
 namespace GavelPoMobile.Application.Common.Interfaces.Persistence;
 public interface IPurchaseOrderRepository {
-    PurchaseOrder GetPurchaseOrderById(int? Id);
-    PagedPurchaseOrders GetAllPurchaseOrders(int? page, int? pageSize);
-    PagedPurchaseOrders GetPurchaseOrdersByStatus(int? status, int? page, int? pageSize);
-    PurchaseOrderDetail GetPurchaseOrderDetailsById(int? purchaseOrderId);
-    PagedPurchaseOrders GetPOApprovalsHistory(int? page, int? pageSize);
+    Task<PurchaseOrder> GetPurchaseOrderById(int? Id, CancellationToken cancellationToken = default);
+    Task<PagedPurchaseOrders> GetAllPurchaseOrders(int? page, int? pageSize, CancellationToken cancellationToken = default);
+    Task<PagedPurchaseOrders> GetPurchaseOrdersByStatus(int? status, int? page, int? pageSize, CancellationToken cancellationToken = default);
+    Task<List<PurchaseOrderDetail>> GetPurchaseOrderDetailsById(int? purchaseOrderId, CancellationToken cancellationToken = default);
+    Task<PagedPurchaseOrders> GetPOApprovalsHistory(int? page, int? pageSize, CancellationToken cancellationToken = default);
 }

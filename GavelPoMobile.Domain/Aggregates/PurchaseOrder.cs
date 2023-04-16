@@ -2,7 +2,6 @@
 
 namespace GavelPoMobile.Domain.Aggregates;
 public sealed class PurchaseOrder {
-    private readonly List<PurchaseOrderDetail> _purchaseOrderDetails = new();
 
     public PurchaseOrder(int oID, string referenceNo, int? status, string remarks, decimal? total, Guid vendorOID,
                          string sourceNo, DateTime? entryDate, string vendorName,
@@ -16,7 +15,7 @@ public sealed class PurchaseOrder {
         SourceNo = sourceNo;
         EntryDate = entryDate;
         VendorName = vendorName;
-        _purchaseOrderDetails = purchaseOrderDetails;
+        PurchaseOrderDetails = purchaseOrderDetails;
     }
 
     public int OID { get; }
@@ -29,5 +28,5 @@ public sealed class PurchaseOrder {
     public DateTime? EntryDate { get; }
     public string VendorName { get; }
 
-    public IReadOnlyList<PurchaseOrderDetail> PurchaseOrderDetails => _purchaseOrderDetails.AsReadOnly();
+    public List<PurchaseOrderDetail> PurchaseOrderDetails;
 }

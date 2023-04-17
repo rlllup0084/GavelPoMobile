@@ -35,14 +35,30 @@ public class Program {
         });
 
         // GetOrderInfinite
+        app.MapGet("api/order/infinite/{status}", async ([FromServicesAttribute] GVLLOCALContextProcedures db, int status, int page, int pageSize) => {
+            return await db.GetOrdersInfiniteAsync(status, page, pageSize);
+        });
 
         // GetOrdersPagination
+        app.MapGet("api/order/paged/{status}", async ([FromServicesAttribute] GVLLOCALContextProcedures db, int status, int page, int pageSize) => {
+            return await db.GetOrdersPaginationAsync(status, page, pageSize);
+        });
 
         // GetOrders
+        app.MapGet("api/order", async ([FromServicesAttribute] GVLLOCALContextProcedures db, int page, int pageSize) => {
+            return await db.GetOrdersAsync(page, pageSize);
+        });
 
         // GetPODetailsById
+        app.MapGet("api/detail/{id}", async ([FromServicesAttribute] GVLLOCALContextProcedures db, int id) => {
+            var op = new OutputParameter<int>();
+            return await db.GetPODetailsByIdAsync(id, op);
+        });
 
         // GetPOPastApprovals
+        app.MapGet("api/order/past", async ([FromServicesAttribute] GVLLOCALContextProcedures db, int page, int pageSize) => {
+            return await db.GetPOPastApprovalsAsync(page, pageSize);
+        });
 
         #endregion
 

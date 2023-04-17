@@ -16,6 +16,7 @@ public partial class GVLLOCALContext : DbContext
     public GVLLOCALContext(DbContextOptions<GVLLOCALContext> options)
         : base(options)
     {
+        this.Database.SetCommandTimeout(TimeSpan.FromMinutes(5));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

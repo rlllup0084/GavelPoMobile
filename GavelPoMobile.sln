@@ -3,7 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GavelPoMobile.SandBox", "GavelPoMobile.SandBox\GavelPoMobile.SandBox.csproj", "{D3F542B5-1325-41DE-B653-6015919A446A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GavelPoMobile.SandBox", "GavelPoMobile.SandBox\GavelPoMobile.SandBox.csproj", "{D3F542B5-1325-41DE-B653-6015919A446A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GavelPoMobile.Domain", "GavelPoMobile.Domain\GavelPoMobile.Domain.csproj", "{B7F19AF8-C2AF-4A73-B7BF-458B1655EBC1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GavelPoMobile.Contract", "GavelPoMobile.Contract\GavelPoMobile.Contract.csproj", "{530B3B45-BA53-43EB-8409-C7EF9CCD31CF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GavelPoMobile.Application", "GavelPoMobile.Application\GavelPoMobile.Application.csproj", "{4DE79EB5-0C98-4218-83D7-B904E55EAD96}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GavelPoMobile.Infrastructure", "GavelPoMobile.Infrastructure\GavelPoMobile.Infrastructure.csproj", "{8A53A19F-D3DE-4E7B-A413-2D50D8A04779}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E63DA6A6-A36A-4A61-BE73-E7DCBA2E3AE8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GavelPoMobile.Api", "GavelPoMobile.Api\GavelPoMobile.Api.csproj", "{E0B2987A-184D-49D9-A236-AEBEC3E1F362}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GavelPoMobile.SandBox3", "GavelPoMobile.SandBox3\GavelPoMobile.SandBox3.csproj", "{9D183AE9-21AB-43D3-926C-80E07766E773}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +32,30 @@ Global
 		{D3F542B5-1325-41DE-B653-6015919A446A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3F542B5-1325-41DE-B653-6015919A446A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3F542B5-1325-41DE-B653-6015919A446A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7F19AF8-C2AF-4A73-B7BF-458B1655EBC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7F19AF8-C2AF-4A73-B7BF-458B1655EBC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7F19AF8-C2AF-4A73-B7BF-458B1655EBC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7F19AF8-C2AF-4A73-B7BF-458B1655EBC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{530B3B45-BA53-43EB-8409-C7EF9CCD31CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{530B3B45-BA53-43EB-8409-C7EF9CCD31CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{530B3B45-BA53-43EB-8409-C7EF9CCD31CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{530B3B45-BA53-43EB-8409-C7EF9CCD31CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DE79EB5-0C98-4218-83D7-B904E55EAD96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DE79EB5-0C98-4218-83D7-B904E55EAD96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DE79EB5-0C98-4218-83D7-B904E55EAD96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DE79EB5-0C98-4218-83D7-B904E55EAD96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A53A19F-D3DE-4E7B-A413-2D50D8A04779}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A53A19F-D3DE-4E7B-A413-2D50D8A04779}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A53A19F-D3DE-4E7B-A413-2D50D8A04779}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A53A19F-D3DE-4E7B-A413-2D50D8A04779}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0B2987A-184D-49D9-A236-AEBEC3E1F362}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0B2987A-184D-49D9-A236-AEBEC3E1F362}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0B2987A-184D-49D9-A236-AEBEC3E1F362}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0B2987A-184D-49D9-A236-AEBEC3E1F362}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D183AE9-21AB-43D3-926C-80E07766E773}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D183AE9-21AB-43D3-926C-80E07766E773}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D183AE9-21AB-43D3-926C-80E07766E773}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D183AE9-21AB-43D3-926C-80E07766E773}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

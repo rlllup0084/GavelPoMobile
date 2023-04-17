@@ -1,5 +1,6 @@
 ﻿using GavelPoMobile.Application.Common.Interfaces.Authentication;
 using GavelPoMobile.Application.Common.Interfaces.Services;
+using GavelPoMobile.Domain.Aggregates;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,28 +17,27 @@ public class JwtTokenGenerator : IJwtTokenGenerator {
         _jwtSettings = jwtOptions.Value;
     }
 
-    // TODO: Later on when User is implemented, use the User object to generate the token.
-    //public string GenerateToken(User user) {
-    //    var siginingCredentials = new SigningCredentials(
-    //            new SymmetricSecurityKey(
-    //                Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
-    //                SecurityAlgorithms.HmacSha256);
+    public string GenerateToken(User user) {
+        var siginingCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
+                    SecurityAlgorithms.HmacSha256);
 
-    //    var claims = new[]
-    //    {
-    //            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-    //            new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
-    //            new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
-    //            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-    //    };
+        var claims = new[]
+        {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Oid.ToString()),
+                new Claim(JwtRegisteredClaimNames.Name, user.Name ?? string.Empty),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        };
 
-    //    var securitytoken = new JwtSecurityToken(
-    //        issuer: _jwtSettings.Issuer,
-    //        audience: _jwtSettings.Audience,
-    //        expires: _dateTimeProvider.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
-    //        claims: claims,
-    //        signingCredentials: siginingCredentials);
+        var securitytoken = new JwtSecurityToken(
+            issuer: _jwtSettings.Issuer,
+            audience: _jwtSettings.Audience,
+            expires: _dateTimeProvider.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
+            claims: claims,
+            signingCredentials: siginingCredentials);
 
-    //    return new JwtSecurityTokenHandler().WriteToken(securitytoken);
-    //}
+        return new JwtSecurityTokenHandler().WriteToken(securitytoken);
+    }
 }

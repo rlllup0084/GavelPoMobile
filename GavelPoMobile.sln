@@ -11,14 +11,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GavelPoMobile.Contract", "G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GavelPoMobile.Application", "GavelPoMobile.Application\GavelPoMobile.Application.csproj", "{4DE79EB5-0C98-4218-83D7-B904E55EAD96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GavelPoMobile.Infrastructure", "GavelPoMobile.Infrastructure\GavelPoMobile.Infrastructure.csproj", "{8A53A19F-D3DE-4E7B-A413-2D50D8A04779}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GavelPoMobile.Infrastructure", "GavelPoMobile.Infrastructure\GavelPoMobile.Infrastructure.csproj", "{8A53A19F-D3DE-4E7B-A413-2D50D8A04779}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E63DA6A6-A36A-4A61-BE73-E7DCBA2E3AE8}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GavelPoMobile.Api", "GavelPoMobile.Api\GavelPoMobile.Api.csproj", "{E0B2987A-184D-49D9-A236-AEBEC3E1F362}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GavelPoMobile.Api", "GavelPoMobile.Api\GavelPoMobile.Api.csproj", "{E0B2987A-184D-49D9-A236-AEBEC3E1F362}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GavelPoMobile.SandBox3", "GavelPoMobile.SandBox3\GavelPoMobile.SandBox3.csproj", "{9D183AE9-21AB-43D3-926C-80E07766E773}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{E0B2987A-184D-49D9-A236-AEBEC3E1F362}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0B2987A-184D-49D9-A236-AEBEC3E1F362}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0B2987A-184D-49D9-A236-AEBEC3E1F362}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D183AE9-21AB-43D3-926C-80E07766E773}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D183AE9-21AB-43D3-926C-80E07766E773}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D183AE9-21AB-43D3-926C-80E07766E773}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D183AE9-21AB-43D3-926C-80E07766E773}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

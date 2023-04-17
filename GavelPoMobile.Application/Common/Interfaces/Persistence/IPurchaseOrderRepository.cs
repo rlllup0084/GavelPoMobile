@@ -8,5 +8,4 @@ public interface IPurchaseOrderRepository {
     Task<PagedPurchaseOrders> GetAllPurchaseOrders(int? page, int? pageSize, CancellationToken cancellationToken = default);
     Task<PagedPurchaseOrders> GetPurchaseOrdersByStatus(int? status, int? page, int? pageSize, CancellationToken cancellationToken = default);
     Task<List<PurchaseOrderDetail>> GetPurchaseOrderDetailsById(int? purchaseOrderId, CancellationToken cancellationToken = default);
-    // Task<PagedPurchaseOrders> GetPOApprovalsHistory(int? page, int? pageSize, CancellationToken cancellationToken = default);
 }

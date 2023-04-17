@@ -3,13 +3,12 @@
 namespace GavelPoMobile.Application.PurchaseOrders.Common;
 public record PurchaseOrderByIdResponse(
     int Id,
-    string ReferenceNo,
+    string? ReferenceNo,
     int? Status,
-    string Remarks,
+    string? Remarks,
     decimal? Total,
-    Guid VendorId,
-    string SourceNo,
+    string? SourceNo,
     DateTime? EntryDate,
-    string VendorName,
-    List<PurchaseOrderDetail> PurchaseOrderDetails
+    string? VendorName,
+    List<PurchaseOrderDetail>? PurchaseOrderDetails
     );

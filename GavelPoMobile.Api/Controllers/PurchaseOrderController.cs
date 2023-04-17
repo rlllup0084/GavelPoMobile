@@ -1,5 +1,7 @@
-﻿using GavelPoMobile.Application.PurchaseOrders.Query.GetOrdersById;
+﻿using GavelPoMobile.Application.PurchaseOrders.Query.GetAllPurchaseOrders;
+using GavelPoMobile.Application.PurchaseOrders.Query.GetOrdersById;
 using GavelPoMobile.Contract.PurchaseOrder.PurchaseOrderById;
+using GavelPoMobile.Contract.PurchaseOrder.PurchaseOrdersList;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,16 +20,29 @@ public class PurchaseOrderController : ApiController {
         _mapper = mapper;
     }
 
-    // GetPurchaseOrderById
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetPurchaseOrderById(PurchaseOrderByIdRequest request,int id) {
-        var query = _mapper.Map<GetOrdersByIdQuery>((request,id));
+    // GetAllPurchaseOrders
+    [HttpGet]
+    public async Task<IActionResult> GetAllPurchaseOrders(PurchaseOrderListRequest request, int page, int pageSize) {
+        var query = _mapper.Map<GetAllPurchaseOrdersQuery>((request, page, pageSize));
 
         var result = await _mediator.Send(query);
 
-        return Ok(result);
+        return result.Match(
+               purchaseOrderResult => Ok(_mapper.Map<PurchaseOrderResponse>(purchaseOrderResult)),
+                      errors => Problem(errors));
     }
-    // GetAllPurchaseOrders
+
+    // GetPurchaseOrderById
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetPurchaseOrderById(PurchaseOrderByIdRequest request, int id) {
+        var query = _mapper.Map<GetOrdersByIdQuery>((request, id));
+
+        var result = await _mediator.Send(query);
+
+        return result.Match(
+               purchaseOrderResult => Ok(_mapper.Map<PurchaseOrderByIdResponse>(purchaseOrderResult)),
+                      errors => Problem(errors));
+    }
+
     // GetPurchaseOrdersByStatus
-    // GetPOApprovalsHistory
 }

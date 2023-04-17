@@ -25,7 +25,7 @@ public class GetPurchaseOrdersByStatusQueryHandler : IRequestHandler<GetPurchase
 
         return new PurchaseOrderResponse(pagedPurchaseOrders.Page,
                                           pagedPurchaseOrders.PageSize,
-                                          pagedPurchaseOrders.PageSize,
+                                          pagedPurchaseOrders.TotalPages,
                                           pagedPurchaseOrders.PurchaseOrders.ToList());
     }
 }

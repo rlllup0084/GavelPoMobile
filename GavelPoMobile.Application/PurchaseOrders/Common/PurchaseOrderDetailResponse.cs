@@ -1,15 +1,15 @@
 ﻿namespace GavelPoMobile.Application.PurchaseOrders.Common;
 public record PurchaseOrderDetailResponse(
     int Id,
-    string SourceNo,
+    string? SourceNo,
     int? GenJournalId,
-    string Description,
+    string? Description,
     decimal? Quantity,
-    string UOM,
+    string? UOM,
     decimal? Cost,
-    string CostCenter,
-    string RequestedBy,
+    string? CostCenter,
+    string? RequestedBy,
     decimal? Total,
     int? LineApprovalStatus,
-    string Remarks
+    string? Remarks
     );

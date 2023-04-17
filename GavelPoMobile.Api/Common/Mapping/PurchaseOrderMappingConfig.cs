@@ -1,22 +1,24 @@
-﻿using GavelPoMobile.Application.PurchaseOrders.Query.GetAllPurchaseOrders;
+﻿using GavelPoMobile.Application.PurchaseOrders.Common;
+using GavelPoMobile.Application.PurchaseOrders.Query.GetAllPurchaseOrders;
 using GavelPoMobile.Application.PurchaseOrders.Query.GetOrdersById;
 using GavelPoMobile.Application.PurchaseOrders.Query.GetPurchaseOrdersByStatus;
-using GavelPoMobile.Contract.PurchaseOrder.PurchaseOrderById;
+using GavelPoMobile.Contract.PurchaseOrder.PurchaseOrdersList;
 using Mapster;
 
 namespace GavelPoMobile.Api.Common.Mapping;
 public class PurchaseOrderMappingConfig : IRegister {
     public void Register(TypeAdapterConfig config) {
-        config.NewConfig<(int Page, int PageSize), GetAllPurchaseOrdersQuery>()
-            .Map(dest => dest.Page, src => src.Page)
-            .Map(dest => dest.PageSize, src => src.PageSize);
+
+        config.NewConfig<(PurchaseOrderListRequest, int page, int pageSize), GetAllPurchaseOrdersQuery>()
+            .Map(dest => dest.Page, src => src.page)
+            .Map(dest => dest.PageSize, src => src.pageSize);
 
         config.NewConfig<(int Status, int Page, int PageSize), GetPurchaseOrdersByStatusQuery>()
             .Map(dest => dest.Status, src => src.Status)
             .Map(dest => dest.Page, src => src.Page)
             .Map(dest => dest.PageSize, src => src.PageSize);
 
-        config.NewConfig<(PurchaseOrderByIdRequest, int Id), GetOrdersByIdQuery>()
+        config.NewConfig<(PurchaseOrderListRequest, int Id), GetOrdersByIdQuery>()
             .Map(dest => dest.Id, src => src.Id);
     }
 }

@@ -27,10 +27,9 @@ public class GetOrdersByIdQueryHandler : IRequestHandler<GetOrdersByIdQuery, Err
                                              purchaseOrder.Status,
                                              purchaseOrder.Remarks,
                                              purchaseOrder.Total,
-                                             purchaseOrder.VendorOID,
                                              purchaseOrder.SourceNo,
                                              purchaseOrder.EntryDate,
-                                             purchaseOrder.VendorName,
-                                             purchaseOrder.PurchaseOrderDetails.ToList());
+                                             purchaseOrder.Vendor,
+                                             purchaseOrder.PurchaseOrderDetails?.ToList());
     }
 }

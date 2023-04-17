@@ -1,5 +1,6 @@
 ﻿using GavelPoMobile.Application.PurchaseOrders.Query.GetAllPurchaseOrders;
 using GavelPoMobile.Application.PurchaseOrders.Query.GetOrdersById;
+using GavelPoMobile.Application.PurchaseOrders.Query.GetPurchaseOrdersByStatus;
 using GavelPoMobile.Contract.PurchaseOrder.PurchaseOrderById;
 using GavelPoMobile.Contract.PurchaseOrder.PurchaseOrdersList;
 using MapsterMapper;
@@ -20,7 +21,6 @@ public class PurchaseOrderController : ApiController {
         _mapper = mapper;
     }
 
-    // GetAllPurchaseOrders
     [HttpGet]
     public async Task<IActionResult> GetAllPurchaseOrders(PurchaseOrderListRequest request, int page, int pageSize) {
         var query = _mapper.Map<GetAllPurchaseOrdersQuery>((request, page, pageSize));
@@ -32,7 +32,6 @@ public class PurchaseOrderController : ApiController {
                       errors => Problem(errors));
     }
 
-    // GetPurchaseOrderById
     [HttpGet("{id}")]
     public async Task<IActionResult> GetPurchaseOrderById(PurchaseOrderByIdRequest request, int id) {
         var query = _mapper.Map<GetOrdersByIdQuery>((request, id));
@@ -44,5 +43,14 @@ public class PurchaseOrderController : ApiController {
                       errors => Problem(errors));
     }
 
-    // GetPurchaseOrdersByStatus
+    [HttpGet("status/{status}")]
+    public async Task<IActionResult> GetPurchaseOrdersByStatus(PurchaseOrderListRequest request, int status, int page, int pageSize) {
+        var query = _mapper.Map<GetPurchaseOrdersByStatusQuery>((request, status, page, pageSize));
+
+        var result = await _mediator.Send(query);
+
+        return result.Match(
+               purchaseOrderResult => Ok(_mapper.Map<PurchaseOrderResponse>(purchaseOrderResult)),
+                      errors => Problem(errors));
+    }
 }

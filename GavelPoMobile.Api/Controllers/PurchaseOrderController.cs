@@ -57,7 +57,6 @@ public class PurchaseOrderController : ApiController {
 
     [HttpPut]
     public async Task<IActionResult> UpdatePurchaseOrderStatus(UpdatePurchaseOrderStatusCommand command) {
-        var query = _mapper.Map<UpdatePurchaseOrderStatusCommand>(command);
         var result = await _mediator.Send(command);
         return result.Match(
                           purchaseOrderResult => Ok(_mapper.Map<PurchaseOrderByIdResponse>(purchaseOrderResult)),

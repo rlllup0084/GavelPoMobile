@@ -4,6 +4,7 @@ using GavelPoMobile.Domain.Aggregates;
 using GavelPoMobile.Domain.Aggregates.Entities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 
 namespace GavelPoMobile.Infrastructure.Pesistence.Repositories;
 public class PurchaseOrderRepository : IPurchaseOrderRepository
@@ -288,5 +289,81 @@ public class PurchaseOrderRepository : IPurchaseOrderRepository
                 Remarks = d.Remarks
             }).ToList()
         };
+    }
+
+    public async Task<PurchaseOrderDetail> GetPurchaseOrderDetailByLineId(int? Id, CancellationToken cancellationToken = default) {
+        var parameterreturnValue = new SqlParameter {
+            ParameterName = "returnValue",
+            Direction = System.Data.ParameterDirection.Output,
+            SqlDbType = System.Data.SqlDbType.Int,
+        };
+
+        var sqlParameters = new[]
+        {
+                new SqlParameter
+                {
+                    ParameterName = "LineId",
+                    Value = Id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+        var detailResult = await _dbContext.SqlQueryAsync<PurchaseOrderDetail>("EXEC @returnValue = [dbo].[GetPODetailsByLineId] @LineId", sqlParameters, cancellationToken);
+
+        return detailResult.FirstOrDefault();
+    }
+
+    public async Task<PurchaseOrderDetail> UpdatePurchaseOrderDetailStatus(int? Id, int? Status, string? Remarks, CancellationToken cancellationToken = default) {
+        var parameterreturnValue = new SqlParameter {
+            ParameterName = "returnValue",
+            Direction = System.Data.ParameterDirection.Output,
+            SqlDbType = System.Data.SqlDbType.Int,
+        };
+
+        var sqlParameters = new[]
+        {
+                new SqlParameter
+                {
+                    ParameterName = "Oid",
+                    Value = Id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "Status",
+                    Value = Status ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "Remarks",
+                    Size = 200,
+                    Value = Remarks ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                parameterreturnValue,
+            };
+
+        await _dbContext.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[UpdatePOLineStatus] @Oid, @Status, @Remarks", sqlParameters, cancellationToken);
+
+        var parameterreturnValue2 = new SqlParameter {
+            ParameterName = "returnValue",
+            Direction = System.Data.ParameterDirection.Output,
+            SqlDbType = System.Data.SqlDbType.Int,
+        };
+
+        var sqlParameters2 = new[]
+        {
+                new SqlParameter
+                {
+                    ParameterName = "LineId",
+                    Value = Id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue2,
+            };
+        var detailResult = await _dbContext.SqlQueryAsync<PurchaseOrderDetail>("EXEC @returnValue = [dbo].[GetPODetailsByLineId] @LineId", sqlParameters2, cancellationToken);
+
+        return detailResult.FirstOrDefault();
     }
 }

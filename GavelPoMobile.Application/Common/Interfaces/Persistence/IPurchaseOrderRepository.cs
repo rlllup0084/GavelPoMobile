@@ -19,4 +19,13 @@ public interface IPurchaseOrderRepository {
                                                   int? Status,
                                                   string Remarks,
                                                   CancellationToken cancellationToken = default);
+
+    Task<PurchaseOrderDetail> GetPurchaseOrderDetailByLineId(int? Id,
+                                                              CancellationToken cancellationToken = default);
+    Task<PurchaseOrderDetail> UpdatePurchaseOrderDetailStatus(int? Id,
+                                                              int? Status,
+                                                              string? Remarks,
+                                                              CancellationToken cancellationToken = default);
+
+    
 }

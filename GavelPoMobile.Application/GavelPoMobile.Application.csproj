@@ -19,8 +19,4 @@
     <ProjectReference Include="..\GavelPoMobile.Domain\GavelPoMobile.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="PurchaseOrders\Commands\" />
-  </ItemGroup>
-
 </Project>

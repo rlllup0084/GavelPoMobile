@@ -1,4 +1,5 @@
-﻿using GavelPoMobile.Application.PurchaseOrders.Query.GetAllPurchaseOrders;
+﻿using GavelPoMobile.Application.PurchaseOrders.Commands.UpdatePurchaseOrderStatus;
+using GavelPoMobile.Application.PurchaseOrders.Query.GetAllPurchaseOrders;
 using GavelPoMobile.Application.PurchaseOrders.Query.GetOrdersById;
 using GavelPoMobile.Application.PurchaseOrders.Query.GetPurchaseOrdersByStatus;
 using GavelPoMobile.Contract.PurchaseOrder.PurchaseOrderById;
@@ -52,5 +53,13 @@ public class PurchaseOrderController : ApiController {
         return result.Match(
                purchaseOrderResult => Ok(_mapper.Map<PurchaseOrderResponse>(purchaseOrderResult)),
                       errors => Problem(errors));
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdatePurchaseOrderStatus(UpdatePurchaseOrderStatusCommand command) {
+        var result = await _mediator.Send(command);
+        return result.Match(
+                          purchaseOrderResult => Ok(_mapper.Map<PurchaseOrderByIdResponse>(purchaseOrderResult)),
+                                               errors => Problem(errors));
     }
 }

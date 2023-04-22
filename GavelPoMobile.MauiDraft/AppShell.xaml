@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+	x:Class="GavelPoMobile.MauiDraft.AppShell"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:views="clr-namespace:GavelPoMobile.MauiDraft.Views"
+	xmlns:local="clr-namespace:GavelPoMobile.MauiDraft">
+
+	<TabBar>
+		<ShellContent
+			Title="Incoming"
+			Icon="iconlistdetail.png"
+			ContentTemplate="{DataTemplate views:IncomingPage}" />
+		<ShellContent
+			Title="Pending"
+			Icon="iconlistdetail.png"
+			ContentTemplate="{DataTemplate views:PendingPage}" />
+		<ShellContent
+			Title="History"
+			Icon="iconlistdetail.png"
+			ContentTemplate="{DataTemplate views:HistoryPage}" />
+		<ShellContent
+			Title="Account"
+			Icon="iconblank.png"
+			ContentTemplate="{DataTemplate views:AccountPage}" />
+	</TabBar>
+</Shell>

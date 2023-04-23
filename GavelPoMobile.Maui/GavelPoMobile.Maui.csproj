@@ -44,8 +44,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
+	  <PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
 	  <PackageReference Include="CommunityToolkit.MVVM" Version="8.1.0" />
+	  <PackageReference Include="DevExpress.Maui.Charts" Version="22.2.5" />
+	  <PackageReference Include="DevExpress.Maui.CollectionView" Version="22.2.5" />
+	  <PackageReference Include="DevExpress.Maui.Controls" Version="22.2.5" />
+	  <PackageReference Include="DevExpress.Maui.DataGrid" Version="22.2.5" />
+	  <PackageReference Include="DevExpress.Maui.Editors" Version="22.2.5" />
+	  <PackageReference Include="DevExpress.Maui.Scheduler" Version="22.2.5" />
 	</ItemGroup>
 
 	<PropertyGroup Label="MauiAppAccelerator">

@@ -49,4 +49,9 @@
 		<PackageReference Include="DevExpress.Maui.Scheduler" Version="22.2.5" />
 		<TrimmableAssembly Include="DevExpress.Data.v22.2" />
 	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Folder Include="Models\" />
+	</ItemGroup>
 </Project>

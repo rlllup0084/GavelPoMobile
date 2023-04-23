@@ -1,8 +1,5 @@
 ﻿using GavelPoMobile.Maui.Services;
-using GavelPoMobile.Maui.ViewModels;
 using GavelPoMobile.Maui.Views;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
 using Application = Microsoft.Maui.Controls.Application;
 
 namespace GavelPoMobile.Maui {
@@ -10,11 +7,8 @@ namespace GavelPoMobile.Maui {
         public App() {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
             DependencyService.Register<NavigationService>();
 
-            Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
-            Routing.RegisterRoute(typeof(NewItemPage).FullName, typeof(NewItemPage));
             MainPage = new MainPage();
             // Use the NavigateToAsync<ViewModelName> method
             // to display the corresponding view.

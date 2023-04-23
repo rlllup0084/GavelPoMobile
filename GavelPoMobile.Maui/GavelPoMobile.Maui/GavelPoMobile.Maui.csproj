@@ -10,10 +10,10 @@
 		<RootNamespace>GavelPoMobile.Maui</RootNamespace>
 
 		<!-- Display name -->
-		<ApplicationTitle>GavelPoMobile.Maui</ApplicationTitle>
+		<ApplicationTitle>GAVEL P.O Approval</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.GavelPoMobile.Maui</ApplicationId>
+		<ApplicationId>com.rlllupconsulting.GavelPoMobile.Maui</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>

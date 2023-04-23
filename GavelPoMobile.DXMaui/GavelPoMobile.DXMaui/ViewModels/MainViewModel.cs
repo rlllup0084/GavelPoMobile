@@ -1,4 +1,3 @@
-﻿namespace GavelPoMobile.DXMaui.ViewModels {
-    public class MainViewModel : BaseViewModel {
-    }
+﻿namespace GavelPoMobile.DXMaui.ViewModels; 
+public class MainViewModel : BaseViewModel {
 }

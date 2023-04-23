@@ -1,20 +1,18 @@
-﻿using GavelPoMobile.DXMaui.Models;
-using GavelPoMobile.DXMaui.ViewModels;
+﻿using GavelPoMobile.DXMaui.ViewModels;
 
-namespace GavelPoMobile.DXMaui.Views {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ItemsPage : ContentPage {
-        public ItemsPage() {
-            InitializeComponent();
-            BindingContext = ViewModel = new ItemsViewModel();
-            ViewModel.OnAppearing();
-        }
+namespace GavelPoMobile.DXMaui.Views;
+[XamlCompilation(XamlCompilationOptions.Compile)]
+public partial class ItemsPage : ContentPage {
+    public ItemsPage() {
+        InitializeComponent();
+        BindingContext = ViewModel = new ItemsViewModel();
+        ViewModel.OnAppearing();
+    }
 
-        ItemsViewModel ViewModel { get; }
+    ItemsViewModel ViewModel { get; }
 
-        protected override void OnAppearing() {
-            base.OnAppearing();
-            ViewModel.OnAppearing();
-        }
+    protected override void OnAppearing() {
+        base.OnAppearing();
+        ViewModel.OnAppearing();
     }
 }

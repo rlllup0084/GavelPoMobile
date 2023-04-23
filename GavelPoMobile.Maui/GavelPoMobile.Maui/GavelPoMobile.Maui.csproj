@@ -7,13 +7,13 @@
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<RootNamespace>GavelPoMobile.Sandbox</RootNamespace>
+		<RootNamespace>GavelPoMobile.Maui</RootNamespace>
 
 		<!-- Display name -->
-		<ApplicationTitle>GavelPoMobile.Sandbox</ApplicationTitle>
+		<ApplicationTitle>GavelPoMobile.Maui</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.GavelPoMobile.Sandbox</ApplicationId>
+		<ApplicationId>com.companyname.GavelPoMobile.Maui</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -49,7 +49,4 @@
 		<PackageReference Include="DevExpress.Maui.Scheduler" Version="22.2.5" />
 		<TrimmableAssembly Include="DevExpress.Data.v22.2" />
 	</ItemGroup>
-
-
-	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionGavelPoMobileSandboxHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 </Project>

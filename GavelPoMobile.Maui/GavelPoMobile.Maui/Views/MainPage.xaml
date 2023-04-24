@@ -11,4 +11,8 @@
             <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" Route= "GavelPoMobile.Maui.Views.AboutPage"  />
         </Tab>
     </TabBar>
+    <TabBar>
+        <ShellContent ContentTemplate="{DataTemplate local:LoginPage}"
+                      Route="GavelPoMobile.Maui.Views.LoginPage" />
+    </TabBar>
 </Shell>

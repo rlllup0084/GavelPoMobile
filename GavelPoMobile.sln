@@ -18,9 +18,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GavelPoMobile.Api", "GavelPoMobile.Api\GavelPoMobile.Api.csproj", "{E0B2987A-184D-49D9-A236-AEBEC3E1F362}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GavelPoMobile.Sandbox", "GavelPoMobile.Sandbox\GavelPoMobile.Sandbox\GavelPoMobile.Sandbox.csproj", "{36A87DD5-D2DB-4CD7-89C8-E87A13709A4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GavelPoMobile.Sandbox", "GavelPoMobile.Sandbox\GavelPoMobile.Sandbox\GavelPoMobile.Sandbox.csproj", "{36A87DD5-D2DB-4CD7-89C8-E87A13709A4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GavelPoMobile.Maui", "GavelPoMobile.Maui\GavelPoMobile.Maui\GavelPoMobile.Maui.csproj", "{87691094-1FB8-4F1E-9EC2-FD0864D29CD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GavelPoMobile.Maui", "GavelPoMobile.Maui\GavelPoMobile.Maui\GavelPoMobile.Maui.csproj", "{87691094-1FB8-4F1E-9EC2-FD0864D29CD8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MAUI", "MAUI\MAUI.csproj", "{BC939462-CD75-4CCC-8223-7EE7AAF6F1B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +62,12 @@ Global
 		{87691094-1FB8-4F1E-9EC2-FD0864D29CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87691094-1FB8-4F1E-9EC2-FD0864D29CD8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{87691094-1FB8-4F1E-9EC2-FD0864D29CD8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{BC939462-CD75-4CCC-8223-7EE7AAF6F1B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC939462-CD75-4CCC-8223-7EE7AAF6F1B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC939462-CD75-4CCC-8223-7EE7AAF6F1B9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{BC939462-CD75-4CCC-8223-7EE7AAF6F1B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC939462-CD75-4CCC-8223-7EE7AAF6F1B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC939462-CD75-4CCC-8223-7EE7AAF6F1B9}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

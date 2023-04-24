@@ -1,4 +1,8 @@
-﻿namespace GavelPoMobile.Maui.ViewModels;
+﻿using GavelPoMobile.Maui.Models;
+using GavelPoMobile.Maui.Services;
+using Newtonsoft.Json;
+
+namespace GavelPoMobile.Maui.ViewModels;
 public class LoginViewModel : BaseViewModel {
     string userName;
     string password = string.Empty;
@@ -8,6 +12,7 @@ public class LoginViewModel : BaseViewModel {
 
     public LoginViewModel() {
         LoginCommand = new Command(OnLoginClicked, ValidateLogin);
+        AccountRequestCommand = new Command(OnAccountRequestClicked);
         PropertyChanged +=
             (_, __) => LoginCommand.ChangeCanExecute();
     }
@@ -40,8 +45,20 @@ public class LoginViewModel : BaseViewModel {
 
     public Command LoginCommand { get; }
 
+    public Command AccountRequestCommand { get; }
 
     async void OnLoginClicked() {
+        IsAuthInProcess = true;
+        var response = await LoginService.Login(userName, password);
+        IsAuthInProcess = false;
+        
+        if (!string.IsNullOrEmpty(response)) {
+            var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+            ErrorText = errorData.Title;
+            HasError = true;
+            return;
+        }
+        HasError = false;
         await Navigation.NavigateToAsync<AboutViewModel>(true);
     }
 
@@ -49,4 +66,7 @@ public class LoginViewModel : BaseViewModel {
         return !String.IsNullOrWhiteSpace(UserName)
             && !String.IsNullOrWhiteSpace(Password);
     }
+
+    async void OnAccountRequestClicked()
+            => await Shell.Current.DisplayAlert("Request Account", "Please ask your system administrator to register you in the corporate system", "OK");
 }

@@ -37,4 +37,13 @@ public class LoginService : ILoginService {
 
         return reposeContent;
     }
+
+    public async Task<bool> Logout() {
+        await Task.CompletedTask;
+
+        SecureStorage.Remove("gpo_jwt_token");
+        SecureStorage.Remove("gpo_auth_id");
+
+        return true;
+    }
 }

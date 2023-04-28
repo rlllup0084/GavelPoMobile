@@ -45,8 +45,8 @@ public class PurchaseOrderController : ApiController {
     }
 
     [HttpGet("status/{status}")]
-    public async Task<IActionResult> GetPurchaseOrdersByStatus(PurchaseOrderListRequest request, int status, int page, int pageSize) {
-        var query = _mapper.Map<GetPurchaseOrdersByStatusQuery>((request, status, page, pageSize));
+    public async Task<IActionResult> GetPurchaseOrdersByStatus(int status, int page, int pageSize) {
+        var query = _mapper.Map<GetPurchaseOrdersByStatusQuery>((status, page, pageSize));
 
         var result = await _mediator.Send(query);
 

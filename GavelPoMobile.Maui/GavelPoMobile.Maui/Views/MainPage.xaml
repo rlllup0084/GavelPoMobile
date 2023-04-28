@@ -10,6 +10,9 @@
         <Tab Title="About" Icon="info">
             <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" Route= "GavelPoMobile.Maui.Views.AboutPage"  />
         </Tab>
+        <Tab Title ="Incoming" Icon="browse">
+            <ShellContent ContentTemplate="{DataTemplate local:IncomingPage}" />
+        </Tab>
     </TabBar>
     <TabBar>
         <ShellContent ContentTemplate="{DataTemplate local:LoginPage}"

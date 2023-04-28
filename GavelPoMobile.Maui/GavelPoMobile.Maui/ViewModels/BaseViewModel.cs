@@ -12,6 +12,8 @@ public class BaseViewModel : INotifyPropertyChanged {
 
     public ILoginService LoginService => DependencyService.Get<ILoginService>();
 
+    public IPurchaseOrderService PurchaseOrderService => DependencyService.Get<IPurchaseOrderService>();
+
     public bool IsBusy {
         get { return this.isBusy; }
         set { SetProperty(ref this.isBusy, value); }

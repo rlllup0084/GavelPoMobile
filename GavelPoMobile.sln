@@ -24,6 +24,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GavelPoMobile.Maui", "Gavel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MAUI", "MAUI\MAUI.csproj", "{BC939462-CD75-4CCC-8223-7EE7AAF6F1B9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoCenter.Maui", "CS\DemoCenter.Maui.csproj", "{5E4A95AE-771C-4A37-8CEE-68156E3DC2A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{BC939462-CD75-4CCC-8223-7EE7AAF6F1B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC939462-CD75-4CCC-8223-7EE7AAF6F1B9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BC939462-CD75-4CCC-8223-7EE7AAF6F1B9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{5E4A95AE-771C-4A37-8CEE-68156E3DC2A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E4A95AE-771C-4A37-8CEE-68156E3DC2A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E4A95AE-771C-4A37-8CEE-68156E3DC2A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E4A95AE-771C-4A37-8CEE-68156E3DC2A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,6 +13,8 @@ public partial class App : Application {
 
         DependencyService.Register<LoginService>();
 
+        DependencyService.Register<PurchaseOrderService>();
+
         MainPage = new MainPage();
         // Use the NavigateToAsync<ViewModelName> method
         // to display the corresponding view.

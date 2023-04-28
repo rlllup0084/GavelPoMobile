@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
+             x:Class="GavelPoMobile.Maui.Views.IncomingPage"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <dxg:DataGridView x:Name="grid"
+                          ItemsSource="{Binding Items}">
+            <dxg:DataGridView.Columns>
+                <dxg:NumberColumn FieldName="Id" Width="60"/>
+                <dxg:TextColumn FieldName="SourceNo" Caption="Source No" MinWidth="120"/>
+                <dxg:DateColumn FieldName="EntryDate" Caption="Entry Date" MinWidth="120"/>
+                <dxg:TextColumn FieldName="Vendor" MinWidth="140"/>
+                <dxg:TextColumn FieldName="ReferenceNo" Caption="Reference No" MinWidth="120"/>
+                <dxg:NumberColumn FieldName="Status" Width="100"/>
+                <dxg:TextColumn FieldName="Remarks" MinWidth="140"/>
+                <dxg:NumberColumn FieldName="Total" Width="100"/>
+            </dxg:DataGridView.Columns>
+        </dxg:DataGridView>
+    </ContentPage.Content>
+</ContentPage>

@@ -19,7 +19,7 @@ public class PurchaseOrderMappingConfig : IRegister {
             .Map(dest => dest.Page, src => src.page)
             .Map(dest => dest.PageSize, src => src.pageSize);
 
-        config.NewConfig<(PurchaseOrderListRequest, int status, int page, int pageSize), GetPurchaseOrdersByStatusQuery>()
+        config.NewConfig<(int status, int page, int pageSize), GetPurchaseOrdersByStatusQuery>()
             .Map(dest => dest.Status, src => src.status)
             .Map(dest => dest.Page, src => src.page)
             .Map(dest => dest.PageSize, src => src.pageSize);

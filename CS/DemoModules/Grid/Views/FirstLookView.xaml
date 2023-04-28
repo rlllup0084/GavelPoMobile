@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local:BaseGridContentPage
+    x:Class="DemoCenter.Maui.Views.FirstLookView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
+    xmlns:local="clr-namespace:DemoCenter.Maui.Views"
+    xmlns:demo="clr-namespace:DemoCenter.Maui.Demo">
+    <ContentPage.Resources>
+        <local:DepartmentToImageConverter x:Key="DepartmentToImageConverter"/>
+    </ContentPage.Resources>
+    <dxg:DataGridView x:Name="grid" ItemsSource="{Binding Path=Employees}">
+        <dxg:DataGridView.Columns>
+            <dxg:ImageColumn FieldName="Image" Caption="Photo" FixedStyle="Start" Width="75" Padding="10,4,10,4"/>
+            <dxg:TextColumn FieldName="FullName" IsReadOnly="true" Width="{OnIdiom Phone='120', Tablet='180'}"/>
+            <dxg:TextColumn FieldName="GroupName" GroupCaptionDisplayFormat="{}{1}" IsGrouped="true">
+                <dxg:TextColumn.GroupCaptionTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal">
+                            <demo:IconView HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" Source="{Binding Converter={StaticResource DepartmentToImageConverter}}" VerticalOptions="Center"/>
+                            <Label TextColor="{Binding Source={RelativeSource AncestorType={x:Type dxg:DataGridView}}, Path=ActualAppearance.GroupRowFontColor}"
+                                   Margin="9, 0, 0, 0"
+                                   FontFamily="{Binding Source={RelativeSource AncestorType={x:Type dxg:DataGridView}}, Path=ActualAppearance.GroupRowFontFamily}"
+                                   Text="{Binding GroupText}"
+                                   VerticalOptions="Center"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalOptions="FillAndExpand"
+                                   FontSize="16">
+                            </Label>
+                        </StackLayout>
+                    </DataTemplate>
+                </dxg:TextColumn.GroupCaptionTemplate>
+            </dxg:TextColumn>
+            <dxg:TextColumn FieldName="JobTitle" MinWidth="150" Width="1.5*" />
+            <dxg:TextColumn FieldName="Phone" MinWidth="150" Width="*" />
+            <dxg:DateColumn FieldName="HireDate" MinWidth="120" Width="*" />
+        </dxg:DataGridView.Columns>
+    </dxg:DataGridView>
+</local:BaseGridContentPage>

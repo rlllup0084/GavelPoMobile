@@ -10,7 +10,7 @@ namespace GavelPoMobile.Maui.Services;
 public class PurchaseOrderService : IPurchaseOrderService {
 
     private static readonly HttpClient HttpClient = new HttpClient();
-    private readonly string _apiUrl = ON.Platform(android: "http://192.168.1.201:7082/api/order/status/", iOS: "http://192.168.1.201:7082/api/order/status/");
+    private readonly string _apiUrl = ON.Platform(android: "http://192.168.1.203:7082/api/order/status/", iOS: "http://192.168.1.203:7082/api/order/status/");
 
     public PurchaseOrderService() {
     }

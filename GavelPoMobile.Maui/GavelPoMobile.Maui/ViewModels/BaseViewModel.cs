@@ -24,17 +24,7 @@ public class BaseViewModel : INotifyPropertyChanged {
         set { SetProperty(ref this.title, value); }
     }
 
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-
-    public virtual Task InitializeAsync(object parameter) {
-        return Task.CompletedTask;
-    }
-
-    protected bool SetProperty<T>(ref T backingStore, T value,
-        [CallerMemberName] string propertyName = "",
-        Action onChanged = null) {
+    protected bool SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyName = "") {
         if (EqualityComparer<T>.Default.Equals(backingStore, value))
             return false;
 
@@ -44,12 +34,21 @@ public class BaseViewModel : INotifyPropertyChanged {
         return true;
     }
 
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = "") {
-        var changed = PropertyChanged;
-        if (changed == null)
-            return;
-
-        changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    protected bool SetProperty<T>(ref T backingStore, T value, Action<T, T> onChanged, [CallerMemberName] string propertyName = "") {
+        if (EqualityComparer<T>.Default.Equals(backingStore, value))
+            return false;
+        T oldValue = backingStore;
+        backingStore = value;
+        onChanged?.Invoke(oldValue, value);
+        OnPropertyChanged(propertyName);
+        return true;
     }
+
+    #region INotifyPropertyChanged
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = "") {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+    #endregion
 
 }

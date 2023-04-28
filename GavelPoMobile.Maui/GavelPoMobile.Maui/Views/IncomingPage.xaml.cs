@@ -8,13 +8,6 @@ public partial class IncomingPage : ContentPage
 	public IncomingPage()
 	{
 		InitializeComponent();
-        BindingContext = ViewModel = new IncomingViewModel();
-    }
-
-	IncomingViewModel ViewModel { get; }
-
-    protected override void OnAppearing() {
-        base.OnAppearing();
-        ViewModel.OnAppearing();
+        BindingContext = new IncomingViewModel();
     }
 }

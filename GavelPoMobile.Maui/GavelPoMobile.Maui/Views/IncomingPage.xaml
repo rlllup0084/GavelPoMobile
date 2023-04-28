@@ -6,7 +6,10 @@
              Title="{Binding Title}">
     <ContentPage.Content>
         <dxg:DataGridView x:Name="grid"
-                          ItemsSource="{Binding Items}">
+                          ItemsSource="{Binding Items}"
+                          IsLoadMoreEnabled="True" 
+                          LoadMoreCommand="{Binding LoadMoreCommand}" 
+                           IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}">
             <dxg:DataGridView.Columns>
                 <dxg:NumberColumn FieldName="Id" Width="60"/>
                 <dxg:TextColumn FieldName="SourceNo" Caption="Source No" MinWidth="120"/>

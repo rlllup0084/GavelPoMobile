@@ -9,16 +9,15 @@
                           ItemsSource="{Binding Items}"
                           IsLoadMoreEnabled="True" 
                           LoadMoreCommand="{Binding LoadMoreCommand}" 
-                           IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}">
+                          IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}">
             <dxg:DataGridView.Columns>
-                <dxg:NumberColumn FieldName="Id" Width="60"/>
-                <dxg:TextColumn FieldName="SourceNo" Caption="Source No" MinWidth="120"/>
-                <dxg:DateColumn FieldName="EntryDate" Caption="Entry Date" MinWidth="120"/>
-                <dxg:TextColumn FieldName="Vendor" MinWidth="140"/>
-                <dxg:TextColumn FieldName="ReferenceNo" Caption="Reference No" MinWidth="120"/>
-                <dxg:NumberColumn FieldName="Status" Width="100"/>
-                <dxg:TextColumn FieldName="Remarks" MinWidth="140"/>
-                <dxg:NumberColumn FieldName="Total" Width="100"/>
+                <dxg:TextColumn FieldName="SourceNo" Caption="No." MinWidth="150" FixedStyle="Start"/>
+                <dxg:DateColumn FieldName="EntryDate" Caption="Entry Date" MinWidth="115" 
+                                DisplayFormat="MM/dd/yyyy" 
+                                HorizontalContentAlignment="Center"/>
+                <dxg:TextColumn FieldName="Vendor" MinWidth="250"/>
+                <dxg:TextColumn FieldName="ReferenceNo" Caption="Reference No." MinWidth="150"/>
+                <dxg:NumberColumn FieldName="Total" Width="115" DisplayFormat="N2"/>
             </dxg:DataGridView.Columns>
         </dxg:DataGridView>
     </ContentPage.Content>

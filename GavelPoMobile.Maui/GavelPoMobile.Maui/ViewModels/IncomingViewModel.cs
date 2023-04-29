@@ -6,6 +6,7 @@ using System.Windows.Input;
 namespace GavelPoMobile.Maui.ViewModels;
 public class IncomingViewModel : BaseViewModel {
     int nextPage = 1;
+    int totalPages = 1;
     public IncomingViewModel() {
         Title = "Incoming";
         Items = new ObservableCollection<PurchaseOrderData>();
@@ -15,7 +16,9 @@ public class IncomingViewModel : BaseViewModel {
     void ExecuteLoadMoreCommand() {
         Task.Run(() => {
             Thread.Sleep(1000);
-            LoadData(nextPage);
+            if (nextPage <= totalPages) {
+                LoadData(nextPage);
+            }
             IsRefreshing = false;
         });
     }
@@ -38,6 +41,7 @@ public class IncomingViewModel : BaseViewModel {
 
         try {
             var pagedPurchaseOrders = JsonConvert.DeserializeObject<PagedPurchaseOrders>(response);
+            totalPages = pagedPurchaseOrders.TotalPages;
             foreach (var item in pagedPurchaseOrders.Results) {
                 Items.Add(item);
             }

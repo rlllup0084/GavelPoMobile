@@ -13,6 +13,18 @@
         <Tab Title ="Incoming" Icon="browse">
             <ShellContent ContentTemplate="{DataTemplate local:IncomingPage}" />
         </Tab>
+        <Tab Title ="Incoming" Icon="browse">
+            <ShellContent ContentTemplate="{DataTemplate local:ApprovedPage}" />
+        </Tab>
+        <Tab Title ="Incoming" Icon="browse">
+            <ShellContent ContentTemplate="{DataTemplate local:DisapprovedPage}" />
+        </Tab>
+        <Tab Title ="Incoming" Icon="browse">
+            <ShellContent ContentTemplate="{DataTemplate local:PendingPage}" />
+        </Tab>
+        <Tab Title ="Incoming" Icon="browse">
+            <ShellContent ContentTemplate="{DataTemplate local:HistoryPage}" />
+        </Tab>
     </TabBar>
     <TabBar>
         <ShellContent ContentTemplate="{DataTemplate local:LoginPage}"

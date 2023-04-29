@@ -23,8 +23,8 @@ public class PurchaseOrderController : ApiController {
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllPurchaseOrders(PurchaseOrderListRequest request, int page, int pageSize) {
-        var query = _mapper.Map<GetAllPurchaseOrdersQuery>((request, page, pageSize));
+    public async Task<IActionResult> GetAllPurchaseOrders(int page, int pageSize) {
+        var query = _mapper.Map<GetAllPurchaseOrdersQuery>((page, pageSize));
 
         var result = await _mediator.Send(query);
 

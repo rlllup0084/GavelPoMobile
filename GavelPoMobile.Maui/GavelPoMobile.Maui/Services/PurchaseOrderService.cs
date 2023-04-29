@@ -15,6 +15,10 @@ public class PurchaseOrderService : IPurchaseOrderService {
     public PurchaseOrderService() {
     }
 
+    public Task<string> GetAllPurchaseOrders(int page, int pageSize) {
+        throw new NotImplementedException();
+    }
+
     public async Task<string> GetPurchaseOrderByStatus(int status, int page, int pageSize) {
 
         var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiUrl}{status}?page={page}&pageSize={pageSize}");

@@ -9,7 +9,7 @@ public class HistoryViewModel : BaseViewModel {
     int totalPages = 1;
 
     public HistoryViewModel() {
-        Title = "History";
+        Title = "All Purchases";
         Items = new ObservableCollection<PurchaseOrderData>();
         LoadMoreCommand = new Command(ExecuteLoadMoreCommand);
     }
@@ -38,7 +38,7 @@ public class HistoryViewModel : BaseViewModel {
     }
 
     async void LoadData(int page) {
-        var response = await PurchaseOrderService.GetPurchaseOrderByStatus(0, page, 20);
+        var response = await PurchaseOrderService.GetAllPurchaseOrders(page, 20);
 
         try {
             var pagedPurchaseOrders = JsonConvert.DeserializeObject<PagedPurchaseOrders>(response);

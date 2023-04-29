@@ -15,7 +15,7 @@ namespace GavelPoMobile.Api.Common.Mapping;
 public class PurchaseOrderMappingConfig : IRegister {
     public void Register(TypeAdapterConfig config) {
 
-        config.NewConfig<(PurchaseOrderListRequest, int page, int pageSize), GetAllPurchaseOrdersQuery>()
+        config.NewConfig<(int page, int pageSize), GetAllPurchaseOrdersQuery>()
             .Map(dest => dest.Page, src => src.page)
             .Map(dest => dest.PageSize, src => src.pageSize);
 

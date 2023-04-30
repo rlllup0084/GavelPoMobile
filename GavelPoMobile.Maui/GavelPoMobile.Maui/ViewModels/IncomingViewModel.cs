@@ -11,7 +11,14 @@ public class IncomingViewModel : BaseViewModel {
         Title = "Incoming";
         Items = new ObservableCollection<PurchaseOrderData>();
         LoadMoreCommand = new Command(ExecuteLoadMoreCommand);
+        OpenPurchaseOrder = new Command<PurchaseOrderData>(ExecuteOpenPurchaseOrder);
     }
+
+    private void ExecuteOpenPurchaseOrder(PurchaseOrderData purchaseOrder) {
+        Console.WriteLine(purchaseOrder.Id);
+    }
+
+    public Command<PurchaseOrderData> OpenPurchaseOrder { get; }
 
     void ExecuteLoadMoreCommand() {
         Task.Run(() => {

@@ -22,4 +22,20 @@ public partial class IncomingPage : ContentPage {
             e.FontAttributes = FontAttributes.Bold;
         }
     }
+
+    private void OnShowPurchaseInfo(object sender, SwipeItemTapEventArgs e) {
+
+    }
+
+    private void OnApprove(object sender, SwipeItemTapEventArgs e) {
+
+    }
+
+    private void OnDisapprove(object sender, SwipeItemTapEventArgs e) {
+
+    }
+
+    private void OnPending(object sender, SwipeItemTapEventArgs e) {
+
+    }
 }

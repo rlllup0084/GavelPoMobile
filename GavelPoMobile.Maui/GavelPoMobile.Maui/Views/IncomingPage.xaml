@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
+             xmlns:local="clr-namespace:GavelPoMobile.Maui.ViewModels"
              x:Class="GavelPoMobile.Maui.Views.IncomingPage"
              Title="{Binding Title}">
     <ContentPage.Content>
@@ -10,7 +11,15 @@
                           IsLoadMoreEnabled="True" 
                           LoadMoreCommand="{Binding LoadMoreCommand}" 
                           IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
-                          CustomCellAppearance="grid_CustomCellAppearance" IsColumnHeaderVisible="False">
+                          CustomCellAppearance="grid_CustomCellAppearance" IsColumnHeaderVisible="False" SelectionMode="None">
+            <dxg:DataGridView.StartSwipeItems>
+                <dxg:SwipeItem Caption="Purchase Info" Command="{Binding Source={RelativeSource AncestorType={x:Type local:IncomingViewModel}}, Path=OpenPurchaseOrder}" />
+            </dxg:DataGridView.StartSwipeItems>
+            <dxg:DataGridView.EndSwipeItems>
+                <dxg:SwipeItem Caption="Approve" Tap="OnApprove" BackgroundColor="Green" FontColor="White"/>
+                <dxg:SwipeItem Caption="Disapprove" Tap="OnDisapprove" BackgroundColor="Red" FontColor="White"/>
+                <dxg:SwipeItem Caption="Pending" Tap="OnPending" BackgroundColor="Orange" FontColor="White"/>
+            </dxg:DataGridView.EndSwipeItems>
             <dxg:DataGridView.AdvancedColumnLayout>
                 <dxg:AdvancedColumnLayout>
                     <dxg:AdvancedColumnLayout.ColumnDefinitions>

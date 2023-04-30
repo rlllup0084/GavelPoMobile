@@ -9,16 +9,25 @@
                           ItemsSource="{Binding Items}"
                           IsLoadMoreEnabled="True" 
                           LoadMoreCommand="{Binding LoadMoreCommand}" 
-                          IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}">
-            <dxg:DataGridView.Columns>
-                <dxg:TextColumn FieldName="SourceNo" Caption="No." MinWidth="150" FixedStyle="Start"/>
-                <dxg:DateColumn FieldName="EntryDate" Caption="Entry Date" MinWidth="115" 
-                                DisplayFormat="MM/dd/yyyy" 
-                                HorizontalContentAlignment="Center"/>
-                <dxg:TextColumn FieldName="Vendor" MinWidth="250"/>
-                <dxg:TextColumn FieldName="ReferenceNo" Caption="Reference No." MinWidth="150"/>
-                <dxg:NumberColumn FieldName="Total" Width="115" DisplayFormat="N2"/>
-            </dxg:DataGridView.Columns>
+                          IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                          CustomCellAppearance="grid_CustomCellAppearance" IsColumnHeaderVisible="False">
+            <dxg:DataGridView.AdvancedColumnLayout>
+                <dxg:AdvancedColumnLayout>
+                    <dxg:AdvancedColumnLayout.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </dxg:AdvancedColumnLayout.ColumnDefinitions>
+                    <dxg:AdvancedColumnLayout.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </dxg:AdvancedColumnLayout.RowDefinitions>
+                </dxg:AdvancedColumnLayout>
+            </dxg:DataGridView.AdvancedColumnLayout>
+            <dxg:TextColumn FieldName="SourceNo" Caption="No." Row="0" Column="0"/>
+            <dxg:DateColumn FieldName="EntryDate" Caption="Entry Date" DisplayFormat="MM/dd/yyyy" Row="0" Column="1"/>
+            <dxg:NumberColumn FieldName="Total" DisplayFormat="N2" Row="0" Column="2"/>
+            <dxg:TextColumn FieldName="Vendor" Row="1" ColumnSpan="3"/>
         </dxg:DataGridView>
     </ContentPage.Content>
 </ContentPage>

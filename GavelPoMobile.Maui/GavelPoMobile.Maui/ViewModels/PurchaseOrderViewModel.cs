@@ -98,20 +98,20 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
     }
 
     public PurchaseOrderViewModel() {
-        ShowDetailsCommand = new Command<PurchaseOrderMasterDetails>(ExecuteShowDetailsCommand);
-        ApproveCommand = new Command<PurchaseOrderMasterDetails>(ExecuteApproveCommand);
-        DisapproveCommand = new Command<PurchaseOrderMasterDetails>(ExecuteDisapproveCommand);
-        PendingCommand = new Command<PurchaseOrderMasterDetails>(ExecutePendingCommand);
+        ShowDetailsCommand = new Command(ExecuteShowDetailsCommand);
+        ApproveCommand = new Command(ExecuteApproveCommand);
+        DisapproveCommand = new Command(ExecuteDisapproveCommand);
+        PendingCommand = new Command(ExecutePendingCommand);
 
     }
 
-    private void ExecutePendingCommand(PurchaseOrderMasterDetails obj) {
-        Console.WriteLine(obj);
+    private void ExecutePendingCommand() {
+        Console.WriteLine("ExecutePendingCommand");
     }
 
-    private void ExecuteDisapproveCommand(PurchaseOrderMasterDetails obj) {
+    private void ExecuteDisapproveCommand() {
         if (btnDisapproveText == "Disapprove") {
-            Console.WriteLine(obj);
+            Console.WriteLine("ExecuteDisapproveCommand");
         } else if (btnDisapproveText == "Cancel") {
             Remarks = retRemarks;
             BtnApproveText = "Approve";
@@ -119,17 +119,17 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
         }
     }
 
-    private void ExecuteApproveCommand(PurchaseOrderMasterDetails obj) {
+    private void ExecuteApproveCommand() {
         if (btnApproveText == "Approve") {
-            Console.WriteLine(obj);
+            Console.WriteLine("ExecuteApproveCommand");
         } else if (btnApproveText == "Save") {
             BtnApproveText = "Approve";
             BtnDisapproveText = "Disapprove";
         }
     }
 
-    private void ExecuteShowDetailsCommand(PurchaseOrderMasterDetails obj) {
-        Console.WriteLine(obj);
+    private async void ExecuteShowDetailsCommand() {
+        await Navigation.NavigateToAsync<PurchaseOrderDetailsViewModel>(id.ToString());
     }
 
     public async Task LoadPurchaseOrderId(string purchaseOrderId) {
@@ -184,11 +184,11 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
     }
 
     // ShowDetailsCommand
-    public Command<PurchaseOrderMasterDetails> ShowDetailsCommand { get; }
+    public Command ShowDetailsCommand { get; }
     // ApproveCommand
-    public Command<PurchaseOrderMasterDetails> ApproveCommand { get; }
+    public Command ApproveCommand { get; }
     // DisapproveCommand
-    public Command<PurchaseOrderMasterDetails> DisapproveCommand { get; }
+    public Command DisapproveCommand { get; }
     // PendingCommand
-    public Command<PurchaseOrderMasterDetails> PendingCommand { get; }
+    public Command PendingCommand { get; }
 }

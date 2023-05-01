@@ -43,4 +43,19 @@ public class PurchaseOrderService : IPurchaseOrderService {
 
         return responseContent;
     }
+
+    public async Task<string> GetPurchaseOrderById(int id) {
+
+        var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiUrl}/order/{id}");
+
+        var authToken = await SecureStorage.GetAsync("gpo_jwt_token");
+
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
+
+        var response = await HttpClient.SendAsync(request);
+
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        return responseContent;
+    }
 }

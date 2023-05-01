@@ -14,8 +14,9 @@ public class IncomingViewModel : BaseViewModel {
         OpenPurchaseOrder = new Command<PurchaseOrderData>(ExecuteOpenPurchaseOrder);
     }
 
-    private void ExecuteOpenPurchaseOrder(PurchaseOrderData purchaseOrder) {
-        Console.WriteLine(purchaseOrder.Id);
+    async void ExecuteOpenPurchaseOrder(PurchaseOrderData purchaseOrder) {
+        //Console.WriteLine(purchaseOrder.Id);
+        await Navigation.NavigateToAsync<PurchaseOrderViewModel>(purchaseOrder.Id.ToString());
     }
 
     public Command<PurchaseOrderData> OpenPurchaseOrder { get; }

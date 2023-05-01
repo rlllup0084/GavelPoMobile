@@ -34,8 +34,8 @@ public class PurchaseOrderController : ApiController {
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetPurchaseOrderById(PurchaseOrderByIdRequest request, int id) {
-        var query = _mapper.Map<GetOrdersByIdQuery>((request, id));
+    public async Task<IActionResult> GetPurchaseOrderById(int id) {
+        var query = _mapper.Map<GetOrdersByIdQuery>((new PurchaseOrderByIdRequest { },id));
 
         var result = await _mediator.Send(query);
 

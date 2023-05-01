@@ -5,7 +5,7 @@ public sealed class PurchaseOrderDetail {
     public int? GenJournalID { get; set; }
     public string? Description { get; set; }
     public decimal? Quantity { get; set; }
-    public string? UOM { get; set; }
+    public string? Uom { get; set; }
     public decimal? Cost { get; set; }
     public string? CostCenter { get; set; }
     public string? RequestedBy { get; set; }

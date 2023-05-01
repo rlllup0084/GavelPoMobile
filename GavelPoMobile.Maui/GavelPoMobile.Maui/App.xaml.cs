@@ -15,6 +15,8 @@ public partial class App : Application {
 
         DependencyService.Register<PurchaseOrderService>();
 
+        Routing.RegisterRoute(typeof(PurchaseOrderPage).FullName, typeof(PurchaseOrderPage));
+
         MainPage = new MainPage();
         // Use the NavigateToAsync<ViewModelName> method
         // to display the corresponding view.

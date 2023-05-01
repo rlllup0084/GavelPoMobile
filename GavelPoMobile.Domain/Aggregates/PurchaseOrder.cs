@@ -11,5 +11,5 @@ public sealed class PurchaseOrder
     public int? Status { get; set; }
     public string? Remarks { get; set; }
     public decimal? Total { get; set; }
-    public List<PurchaseOrderDetail>? PurchaseOrderDetails { get; set; }
+    public List<PurchaseOrderDetail> PurchaseOrderDetails { get; set; } = new List<PurchaseOrderDetail>();
 }

@@ -11,6 +11,7 @@ public class IncomingViewModel : BaseViewModel {
         Title = "Incoming";
         Items = new ObservableCollection<PurchaseOrderData>();
         LoadMoreCommand = new Command(ExecuteLoadMoreCommand);
+        PullToRefreshCommand = new Command(ExecutePullToRefreshCommand);
         OpenPurchaseOrder = new Command<PurchaseOrderData>(ExecuteOpenPurchaseOrder);
     }
 
@@ -30,6 +31,24 @@ public class IncomingViewModel : BaseViewModel {
             IsRefreshing = false;
         });
     }
+
+    void ExecutePullToRefreshCommand() {
+        Task.Factory.StartNew(() => {
+            Thread.Sleep(3000);
+#pragma warning disable CS0612 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
+            Device.BeginInvokeOnMainThread(() => {
+                nextPage = 1;
+                totalPages = 1;
+                Items.Clear();
+                LoadData(nextPage);
+                IsRefreshing = false;
+            });
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning restore CS0612 // Type or member is obsolete
+        });
+    }
+
     bool isRefreshing = false;
     public bool IsRefreshing {
         get => this.isRefreshing;
@@ -42,6 +61,13 @@ public class IncomingViewModel : BaseViewModel {
     public ICommand LoadMoreCommand {
         get => this.loadMoreCommand;
         set => SetProperty(ref this.loadMoreCommand, value);
+    }
+
+
+    ICommand pullToRefreshCommand = null;
+    public ICommand PullToRefreshCommand {
+        get => pullToRefreshCommand;
+        set => SetProperty(ref this.pullToRefreshCommand, value);
     }
 
     async void LoadData(int page) {

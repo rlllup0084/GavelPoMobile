@@ -1,7 +1,6 @@
 ﻿using GavelPoMobile.Maui.Models;
 using Newtonsoft.Json;
 using System.Web;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace GavelPoMobile.Maui.ViewModels;
 
@@ -19,7 +18,7 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
     private bool isRemarksDirty = false;
 
     private bool isLoading = true;
-    private bool isModified = false;
+    //private bool isModified = false;
 
     private string oldRemarks;
     private string retRemarks;
@@ -126,7 +125,7 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
         } else if (btnApproveText == "Save") {
             BtnApproveText = "Approve";
             BtnDisapproveText = "Disapprove";
-        } 
+        }
     }
 
     private void ExecuteShowDetailsCommand(PurchaseOrderMasterDetails obj) {

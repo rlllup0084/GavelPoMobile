@@ -8,8 +8,10 @@
     <ContentPage.Content>
         <dxg:DataGridView x:Name="grid"
                           ItemsSource="{Binding Items}"
+                          IsPullToRefreshEnabled="true"
                           IsLoadMoreEnabled="True" 
                           LoadMoreCommand="{Binding LoadMoreCommand}" 
+                          PullToRefreshCommand="{Binding PullToRefreshCommand}" 
                           IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
                           CustomCellAppearance="grid_CustomCellAppearance" IsColumnHeaderVisible="False" SelectionMode="None">
             <dxg:DataGridView.StartSwipeItems>

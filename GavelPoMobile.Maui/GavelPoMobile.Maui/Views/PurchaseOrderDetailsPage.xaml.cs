@@ -9,4 +9,8 @@ public partial class PurchaseOrderDetailsPage : ContentPage
 		InitializeComponent();
         BindingContext = new PurchaseOrderDetailsViewModel();
     }
+
+    private void grid_CustomCellAppearance(object sender, DevExpress.Maui.DataGrid.CustomCellAppearanceEventArgs e) {
+
+    }
 }

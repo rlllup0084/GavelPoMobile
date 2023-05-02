@@ -1,12 +1,63 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:dxco="clr-namespace:DevExpress.Maui.Controls;assembly=DevExpress.Maui.Controls"
+             xmlns:local="clr-namespace:GavelPoMobile.Maui.ViewModels"
+             xmlns:resource="clr-namespace:GavelPoMobile.Maui.Common"
              x:Class="GavelPoMobile.Maui.Views.PurchaseOrderDetailsPage"
-             Title="PurchaseOrderDetailsPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to PurchaseOrderDetailsPage!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <resource:StatusToImageConverter x:Key="StatusToImageConverter" />
+    </ContentPage.Resources>
+        <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="{Binding StatusIcon}" Order="Primary" Priority="0" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Padding="0">
+            <dxg:DataGridView x:Name="grid"
+                          ItemsSource="{Binding Items}"
+                          IsPullToRefreshEnabled="False"
+                          IsLoadMoreEnabled="False" 
+                          LoadMoreCommand="{Binding LoadMoreCommand}" 
+                          PullToRefreshCommand="{Binding PullToRefreshCommand}" 
+                          IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                          CustomCellAppearance="grid_CustomCellAppearance" 
+                              IsColumnHeaderVisible="False" 
+                              SelectionMode="None">
+                <dxg:DataGridView.AdvancedColumnLayout>
+                    <dxg:AdvancedColumnLayout>
+                        <dxg:AdvancedColumnLayout.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </dxg:AdvancedColumnLayout.ColumnDefinitions>
+                        <dxg:AdvancedColumnLayout.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </dxg:AdvancedColumnLayout.RowDefinitions>
+                    </dxg:AdvancedColumnLayout>
+                </dxg:DataGridView.AdvancedColumnLayout>
+                <dxg:TemplateColumn FieldName="Status" Width="40" Row="0" Column="0">
+                    <dxg:TemplateColumn.DisplayTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Status, Converter={StaticResource StatusToImageConverter}}" 
+                                HeightRequest="24" WidthRequest="24" />
+                        </DataTemplate>
+                    </dxg:TemplateColumn.DisplayTemplate>
+                </dxg:TemplateColumn>
+                <dxg:TextColumn FieldName="Description" Row="0" Column="1" ColumnSpan="3"/>
+                <dxg:NumberColumn FieldName="Quantity" Width="50" Row="1" Column="0"/>
+                <dxg:TextColumn FieldName="Uom" Width="70" Row="1" Column="1"/>
+                <dxg:NumberColumn FieldName="Cost" DisplayFormat="₱#,##0.00" Width="70" Row="1" Column="2"/>
+                <dxg:NumberColumn FieldName="Total" DisplayFormat="₱#,##0.00" Width="70" Row="1" Column="3"/>
+                <dxg:TextColumn FieldName="CostCenter" Row="2" ColumnSpan="4"/>
+                <dxg:TextColumn FieldName="RequestedBy" Row="3" ColumnSpan="4"/>
+            </dxg:DataGridView>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

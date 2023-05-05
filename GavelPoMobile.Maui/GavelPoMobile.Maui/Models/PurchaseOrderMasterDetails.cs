@@ -29,4 +29,5 @@ public class PurchaseOrderDetail {
     public decimal? Total { get; set; }
     public int? LineApprovalStatus { get; set; }
     public string Remarks { get; set; }
+    public bool HasRemarks { get; set; } = false;
 }

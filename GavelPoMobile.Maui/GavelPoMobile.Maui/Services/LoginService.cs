@@ -9,7 +9,7 @@ namespace GavelPoMobile.Maui.Services;
 public class LoginService : ILoginService {
 
     private static readonly HttpClient HttpClient = new HttpClient() { Timeout = new TimeSpan(0, 0, 10) };
-    private readonly string _apiUrl = ON.Platform(android: "http://192.168.1.200:7082/auth/", iOS: "http://192.168.1.200:7082/auth/");
+    private readonly string _apiUrl = ON.Platform(android: "https://gavellogistics.com:7082/auth/", iOS: "https://gavellogistics.com:7082/auth/");
 
     public LoginService() {
     }

@@ -1,4 +1,5 @@
-﻿using GavelPoMobile.Maui.Models;
+﻿using DevExpress.Maui.Core.Internal;
+using GavelPoMobile.Maui.Models;
 using Microsoft.Maui;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
@@ -58,7 +59,26 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
                 default:
                     break;
             }
-            foreach (var item in purchaseOrder.PurchaseOrderDetails) {
+            //foreach (var item in purchaseOrder.PurchaseOrderDetails) {
+            //    Items.Add(item);
+            //}
+            List<PurchaseOrderDetail> purchaseOrderDetails = purchaseOrder.PurchaseOrderDetails.Select(x => new PurchaseOrderDetail {
+                Id = x.Id,
+                SourceNo = x.SourceNo,
+                GenJournalId = x.GenJournalId,
+                Description = x.Description,
+                Quantity = x.Quantity,
+                Uom = x.Uom,
+                Cost = x.Cost,
+                CostCenter = x.CostCenter,
+                RequestedBy = x.RequestedBy,
+                Total = x.Total,
+                LineApprovalStatus = x.LineApprovalStatus,
+                Remarks = !string.IsNullOrEmpty(x.Remarks) ? x.Remarks : "Has no remarks...",
+                HasRemarks = !string.IsNullOrEmpty(x.Remarks)
+            }).ToList();
+
+            foreach (var item in purchaseOrderDetails) {
                 Items.Add(item);
             }
         } catch (Exception) {

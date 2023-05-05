@@ -4,12 +4,19 @@ using Microsoft.Maui;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Web;
+using System.Windows.Input;
 
 namespace GavelPoMobile.Maui.ViewModels;
 public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
 
+    private string id;
     private string statusIcon;
     private string sourceNo;
+
+    public string Id {
+        get => id;
+        set => SetProperty(ref id, value);
+    }
 
     public string StatusIcon {
         get => statusIcon;
@@ -24,6 +31,37 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
 
     public PurchaseOrderDetailsViewModel() {
         Items = new ObservableCollection<PurchaseOrderDetail>();
+        PullToRefreshCommand = new Command(ExecutePullToRefreshCommand);
+    }
+
+    void ExecutePullToRefreshCommand() {
+        Task.Factory.StartNew(() => {
+            Thread.Sleep(3000);
+#pragma warning disable CS0612 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
+            Device.BeginInvokeOnMainThread(async () => {
+                if (!string.IsNullOrEmpty(this.id)) {
+                    Items.Clear();
+                    await LoadPurchaseOrderDetails(this.id);
+                }
+                IsRefreshing = false;
+            });
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning restore CS0612 // Type or member is obsolete
+        });
+    }
+
+    bool isRefreshing = false;
+    public bool IsRefreshing {
+        get => this.isRefreshing;
+        set => SetProperty(ref this.isRefreshing, value);
+    }
+
+    ICommand pullToRefreshCommand = null;
+
+    public ICommand PullToRefreshCommand {
+        get => pullToRefreshCommand;
+        set => SetProperty(ref this.pullToRefreshCommand, value);
     }
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query) {
@@ -32,6 +70,7 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
     }
 
     private async Task LoadPurchaseOrderDetails(string id) {
+        this.id = id;
         var response = await PurchaseOrderService.GetPurchaseOrderById(Convert.ToInt32(id));
 
         try {

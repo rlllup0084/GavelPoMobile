@@ -29,4 +29,12 @@ public partial class PurchaseOrderDetailsPage : ContentPage
             e.FontAttributes = FontAttributes.Italic;
         }
     }
+
+    private void OnHold(object sender, SwipeItemTapEventArgs e) {
+
+    }
+
+    private void OnRelease(object sender, SwipeItemTapEventArgs e) {
+
+    }
 }

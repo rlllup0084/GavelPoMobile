@@ -23,6 +23,13 @@
                           CustomCellAppearance="grid_CustomCellAppearance" 
                               IsColumnHeaderVisible="False" 
                               SelectionMode="None">
+            <dxg:DataGridView.StartSwipeItems>
+                <dxg:SwipeItem Caption="Purchase Line Info" Command="{Binding Source={RelativeSource AncestorType={x:Type local:PurchaseOrderDetailsViewModel}}, Path=OpenPurchaseOrderDetail}" />
+            </dxg:DataGridView.StartSwipeItems>
+            <dxg:DataGridView.EndSwipeItems>
+                <dxg:SwipeItem Caption="Hold" Tap="OnHold" BackgroundColor="Red" FontColor="White"/>
+                <dxg:SwipeItem Caption="Release" Tap="OnRelease" BackgroundColor="Orange" FontColor="White"/>
+            </dxg:DataGridView.EndSwipeItems>
             <dxg:DataGridView.AdvancedColumnLayout>
                 <dxg:AdvancedColumnLayout>
                     <dxg:AdvancedColumnLayout.ColumnDefinitions>

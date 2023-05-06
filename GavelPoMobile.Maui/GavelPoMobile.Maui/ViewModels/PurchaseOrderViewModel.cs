@@ -102,7 +102,6 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
         ApproveCommand = new Command(ExecuteApproveCommand);
         DisapproveCommand = new Command(ExecuteDisapproveCommand);
         PendingCommand = new Command(ExecutePendingCommand);
-
     }
 
     private void ExecutePendingCommand() {

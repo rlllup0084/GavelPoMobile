@@ -24,6 +24,7 @@
                           EditorShowing="grid_EditorShowing"
                           PullToRefreshCommand="{Binding PullToRefreshCommand}" 
                           IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                          PropertyChanged="grid_PropertyChanged"
                           CustomCellAppearance="grid_CustomCellAppearance" 
                               IsColumnHeaderVisible="False" 
                               SelectionMode="None">

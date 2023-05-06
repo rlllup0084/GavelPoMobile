@@ -3,6 +3,7 @@ using GavelPoMobile.Maui.Models;
 using Microsoft.Maui;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Web;
 using System.Windows.Input;
 
@@ -29,7 +30,8 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
 
     public ObservableCollection<PurchaseOrderDetail> Items { 
         get => items; 
-        set => SetProperty(ref items, value); }
+        set => SetProperty(ref items, value); 
+    }
 
     public PurchaseOrderDetailsViewModel() {
         Items = new ObservableCollection<PurchaseOrderDetail>();
@@ -129,10 +131,16 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
             }).ToList();
 
             foreach (var item in purchaseOrderDetails) {
+                item.RemarksChanged += Item_RemarksChanged;
                 Items.Add(item);
             }
         } catch (Exception) {
             await Shell.Current.DisplayAlert("Technical Difficulties", "Please ask your system administrator for assistance or try again later.", "OK");
         }
+    }
+
+    private void Item_RemarksChanged(object sender, EventArgs e) {
+        // TODO: Update to database
+        Console.WriteLine("Remarks has changed");
     }
 }

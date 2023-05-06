@@ -58,4 +58,20 @@ public class PurchaseOrderService : IPurchaseOrderService {
 
         return responseContent;
     }
+
+    public async Task<string> UpdatePurchaseOrderDetailStatus(int id, int status, string remarks) {
+        var body = new {
+            id = id,
+            status = status,
+            remarks = remarks
+        };
+        var json = JsonConvert.SerializeObject(body);
+        var request = new HttpRequestMessage(HttpMethod.Put, $"{_apiUrl}/detail");
+        var authToken = await SecureStorage.GetAsync("gpo_jwt_token");
+        HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
+        request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = await HttpClient.SendAsync(request);
+        var responseContent = await response.Content.ReadAsStringAsync();
+        return responseContent;
+    }
 }

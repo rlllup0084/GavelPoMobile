@@ -11,7 +11,13 @@ public partial class PurchaseOrderDetailsPage : ContentPage
 	public PurchaseOrderDetailsPage()
 	{
 		InitializeComponent();
-        BindingContext = new PurchaseOrderDetailsViewModel();
+        var viewModel = new PurchaseOrderDetailsViewModel();
+        BindingContext = viewModel;
+        this.Disappearing+= PurchaseOrderDetailsPage_Disappearing;
+    }
+
+    private void PurchaseOrderDetailsPage_Disappearing(object sender, EventArgs e) {
+        
     }
 
     private void grid_CustomCellAppearance(object sender, DevExpress.Maui.DataGrid.CustomCellAppearanceEventArgs e) {
@@ -61,4 +67,8 @@ public partial class PurchaseOrderDetailsPage : ContentPage
             }
         } else { e.Cancel = true; }
     }
+
+    private void grid_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+    }
+
 }

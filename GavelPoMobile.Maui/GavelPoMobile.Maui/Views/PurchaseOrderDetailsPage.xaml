@@ -18,6 +18,10 @@
         <dxg:DataGridView x:Name="grid"
                           ItemsSource="{Binding Items}"
                           IsPullToRefreshEnabled="true"
+                          EditorShowMode="Tap"
+                          Tap="grid_Tap"
+                          ValidateCell="grid_ValidateCell"
+                          EditorShowing="grid_EditorShowing"
                           PullToRefreshCommand="{Binding PullToRefreshCommand}" 
                           IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
                           CustomCellAppearance="grid_CustomCellAppearance" 
@@ -63,7 +67,7 @@
             <dxg:NumberColumn FieldName="Total" DisplayFormat="₱#,##0.00" Row="1" Column="4" ColumnSpan="2"/>
             <dxg:TextColumn FieldName="CostCenter" Row="2" Column="0" ColumnSpan="3"/>
             <dxg:TextColumn FieldName="RequestedBy" Row="2" Column="3" ColumnSpan="3"/>
-            <dxg:TextColumn FieldName="Remarks" Row="3" Column="0" ColumnSpan="6"/>
+            <dxg:TextColumn FieldName="Remarks" Row="3" Column="0" ColumnSpan="6" PlaceholderText="Enter remarks here..."/>
         </dxg:DataGridView>
     </ContentPage.Content>
 </ContentPage>

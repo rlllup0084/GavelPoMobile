@@ -27,7 +27,9 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
         set => SetProperty(ref sourceNo, value);
     }
 
-    public ObservableCollection<PurchaseOrderDetail> Items { get; private set; }
+    public ObservableCollection<PurchaseOrderDetail> Items { 
+        get => items; 
+        set => SetProperty(ref items, value); }
 
     public PurchaseOrderDetailsViewModel() {
         Items = new ObservableCollection<PurchaseOrderDetail>();
@@ -59,6 +61,7 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
     }
 
     ICommand pullToRefreshCommand = null;
+    private ObservableCollection<PurchaseOrderDetail> items;
 
     public ICommand PullToRefreshCommand {
         get => pullToRefreshCommand;
@@ -68,8 +71,8 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
     public Command<PurchaseOrderDetail> OpenPurchaseOrderDetail { get; }
 
     async void ExecuteOpenPurchaseOrderDetail(PurchaseOrderDetail purchaseOrderDetail) {
-        await Task.CompletedTask;
-        Console.WriteLine(purchaseOrderDetail.Id);
+        //Console.WriteLine(purchaseOrderDetail.Id);
+        await Navigation.NavigateToAsync<PurchaseOrderDetailInfoViewModel>(purchaseOrderDetail.Id.ToString());
     }
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query) {

@@ -18,9 +18,15 @@
                 <dxg:SwipeItem Caption="Purchase Info" Command="{Binding Source={RelativeSource AncestorType={x:Type local:IncomingViewModel}}, Path=OpenPurchaseOrder}" />
             </dxg:DataGridView.StartSwipeItems>
             <dxg:DataGridView.EndSwipeItems>
-                <dxg:SwipeItem Caption="Approve" Tap="OnApprove" BackgroundColor="Green" FontColor="White"/>
-                <dxg:SwipeItem Caption="Disapprove" Tap="OnDisapprove" BackgroundColor="Red" FontColor="White"/>
-                <dxg:SwipeItem Caption="Pending" Tap="OnPending" BackgroundColor="Orange" FontColor="White"/>
+                <dxg:SwipeItem Caption="Approve" 
+                               Command="{Binding Source={RelativeSource AncestorType={x:Type local:IncomingViewModel}}, Path=ApprovePurchaseOrder}" 
+                               BackgroundColor="Green" FontColor="White"/>
+                <dxg:SwipeItem Caption="Disapprove" 
+                               Command="{Binding Source={RelativeSource AncestorType={x:Type local:IncomingViewModel}}, Path=DisapprovePurchaseOrder}" 
+                               BackgroundColor="Red" FontColor="White"/>
+                <dxg:SwipeItem Caption="Pending" 
+                               Command="{Binding Source={RelativeSource AncestorType={x:Type local:IncomingViewModel}}, Path=PendingPurchaseOrder}" 
+                               BackgroundColor="Orange" FontColor="White"/>
             </dxg:DataGridView.EndSwipeItems>
             <dxg:DataGridView.AdvancedColumnLayout>
                 <dxg:AdvancedColumnLayout>

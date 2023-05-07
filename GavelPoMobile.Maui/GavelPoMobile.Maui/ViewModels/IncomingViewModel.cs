@@ -14,6 +14,9 @@ public class IncomingViewModel : BaseViewModel, IQueryAttributable {
         LoadMoreCommand = new Command(ExecuteLoadMoreCommand);
         PullToRefreshCommand = new Command(ExecutePullToRefreshCommand);
         OpenPurchaseOrder = new Command<PurchaseOrderData>(ExecuteOpenPurchaseOrder);
+        ApprovePurchaseOrder = new Command<PurchaseOrderData>(ExecuteApprovePurchaseOrder);
+        DisapprovePurchaseOrder = new Command<PurchaseOrderData>(ExecuteDisapprovePurchaseOrder);
+        PendingPurchaseOrder = new Command<PurchaseOrderData>(ExecutePendingPurchaseOrder);
     }
 
     async void ExecuteOpenPurchaseOrder(PurchaseOrderData purchaseOrder) {
@@ -21,7 +24,49 @@ public class IncomingViewModel : BaseViewModel, IQueryAttributable {
         await Navigation.NavigateToAsync<PurchaseOrderViewModel>(purchaseOrder.Id.ToString());
     }
 
+    async void ExecuteApprovePurchaseOrder(PurchaseOrderData purchaseOrder) {
+        var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(purchaseOrder.Id, 1, purchaseOrder.Remarks);
+        if (!string.IsNullOrEmpty(response)) {
+            var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+            return;
+        }
+        var itemToRemove = Items.FirstOrDefault(item => item.Id == Convert.ToInt32(purchaseOrder.Id));
+        if (itemToRemove != null) {
+            Items.Remove(itemToRemove);
+        };
+    }
+
+    async void ExecuteDisapprovePurchaseOrder(PurchaseOrderData purchaseOrder) {
+        var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(purchaseOrder.Id, 5, purchaseOrder.Remarks);
+        if (!string.IsNullOrEmpty(response)) {
+            var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+            return;
+        }
+        var itemToRemove = Items.FirstOrDefault(item => item.Id == Convert.ToInt32(purchaseOrder.Id));
+        if (itemToRemove != null) {
+            Items.Remove(itemToRemove);
+        };
+    }
+
+    async void ExecutePendingPurchaseOrder(PurchaseOrderData purchaseOrder) {
+        var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(purchaseOrder.Id, 4, purchaseOrder.Remarks);
+        if (!string.IsNullOrEmpty(response)) {
+            var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+            return;
+        }
+        var itemToRemove = Items.FirstOrDefault(item => item.Id == Convert.ToInt32(purchaseOrder.Id));
+        if (itemToRemove != null) {
+            Items.Remove(itemToRemove);
+        };
+    }
+
     public Command<PurchaseOrderData> OpenPurchaseOrder { get; }
+
+    public Command<PurchaseOrderData> ApprovePurchaseOrder { get; }
+
+    public Command<PurchaseOrderData> DisapprovePurchaseOrder { get; }
+
+    public Command<PurchaseOrderData> PendingPurchaseOrder { get; }
 
     void ExecuteLoadMoreCommand() {
         Task.Run(() => {

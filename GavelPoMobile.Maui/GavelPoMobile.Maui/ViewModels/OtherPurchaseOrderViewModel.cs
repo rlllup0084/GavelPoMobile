@@ -1,10 +1,14 @@
 ﻿using GavelPoMobile.Maui.Models;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
-namespace GavelPoMobile.Maui.ViewModels;
-
-public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
+namespace GavelPoMobile.Maui.ViewModels; 
+public class OtherPurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
     private int id;
     private string referenceNo;
     private int status;
@@ -110,72 +114,8 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
     }
 
 
-    public PurchaseOrderViewModel() {
+    public OtherPurchaseOrderViewModel() {
         ShowDetailsCommand = new Command(ExecuteShowDetailsCommand);
-        ApproveCommand = new Command(ExecuteApproveCommand);
-        DisapproveCommand = new Command(ExecuteDisapproveCommand);
-        PendingCommand = new Command(ExecutePendingCommand);
-    }
-
-    async void ExecutePendingCommand() {
-        // Pending == 5
-        var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, 5, this.remarks);
-        if (!string.IsNullOrEmpty(response)) {
-            var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
-            ErrorText = errorData.Title;
-            HasError = true;
-            return;
-        }
-        HasError = false;
-        StatusIcon = "pending.png";
-        await Navigation.GoBackAsync(this.id);
-    }
-
-    async void ExecuteDisapproveCommand() {
-        // Disapprove == 4
-        if (btnDisapproveText == "Disapprove") {
-            var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, 4, this.remarks);
-            if (!string.IsNullOrEmpty(response)) {
-                var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
-                ErrorText = errorData.Title;
-                HasError = true;
-                return;
-            }
-            HasError = false;
-            StatusIcon = "disapprove.png";
-            await Navigation.GoBackAsync(this.id);
-        } else if (btnDisapproveText == "Cancel") {
-            Remarks = retRemarks;
-            BtnApproveText = "Approve";
-            BtnDisapproveText = "Disapprove";
-        }
-    }
-
-    async void ExecuteApproveCommand() {
-        // Approve == 1
-        if (btnApproveText == "Approve") {
-            var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, 1, this.remarks);
-            if (!string.IsNullOrEmpty(response)) {
-                var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
-                ErrorText = errorData.Title;
-                HasError = true;
-                return;
-            }
-            HasError = false;
-            StatusIcon = "approve.png";
-            await Navigation.GoBackAsync(this.id);
-        } else if (btnApproveText == "Save") {
-            var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, this.status, this.remarks);
-            if (!string.IsNullOrEmpty(response)) {
-                var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
-                ErrorText = errorData.Title;
-                HasError = true;
-                return;
-            }
-            HasError = false;
-            BtnApproveText = "Approve";
-            BtnDisapproveText = "Disapprove";
-        }
     }
 
     private async void ExecuteShowDetailsCommand() {
@@ -235,10 +175,4 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
 
     // ShowDetailsCommand
     public Command ShowDetailsCommand { get; }
-    // ApproveCommand
-    public Command ApproveCommand { get; }
-    // DisapproveCommand
-    public Command DisapproveCommand { get; }
-    // PendingCommand
-    public Command PendingCommand { get; }
 }

@@ -1,10 +1,15 @@
 ﻿using GavelPoMobile.Maui.Models;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
-namespace GavelPoMobile.Maui.ViewModels;
+namespace GavelPoMobile.Maui.ViewModels; 
+public class PendingPurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
 
-public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
     private int id;
     private string referenceNo;
     private int status;
@@ -109,26 +114,10 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
         set => SetProperty(ref hasError, value);
     }
 
-
-    public PurchaseOrderViewModel() {
+    public PendingPurchaseOrderViewModel() {
         ShowDetailsCommand = new Command(ExecuteShowDetailsCommand);
         ApproveCommand = new Command(ExecuteApproveCommand);
         DisapproveCommand = new Command(ExecuteDisapproveCommand);
-        PendingCommand = new Command(ExecutePendingCommand);
-    }
-
-    async void ExecutePendingCommand() {
-        // Pending == 5
-        var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, 5, this.remarks);
-        if (!string.IsNullOrEmpty(response)) {
-            var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
-            ErrorText = errorData.Title;
-            HasError = true;
-            return;
-        }
-        HasError = false;
-        StatusIcon = "pending.png";
-        await Navigation.GoBackAsync(this.id);
     }
 
     async void ExecuteDisapproveCommand() {
@@ -240,5 +229,4 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
     // DisapproveCommand
     public Command DisapproveCommand { get; }
     // PendingCommand
-    public Command PendingCommand { get; }
 }

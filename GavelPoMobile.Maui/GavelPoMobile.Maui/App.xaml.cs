@@ -17,6 +17,10 @@ public partial class App : Application {
 
         Routing.RegisterRoute(typeof(PurchaseOrderPage).FullName, typeof(PurchaseOrderPage));
 
+        Routing.RegisterRoute(typeof(OtherPurchaseOrderPage).FullName, typeof(OtherPurchaseOrderPage));
+
+        Routing.RegisterRoute(typeof(PendingPurchaseOrderPage).FullName, typeof(PendingPurchaseOrderPage));
+
         Routing.RegisterRoute(typeof(PurchaseOrderDetailsPage).FullName, typeof(PurchaseOrderDetailsPage));
 
         Routing.RegisterRoute(typeof(PurchaseOrderDetailInfoPage).FullName, typeof(PurchaseOrderDetailInfoPage));

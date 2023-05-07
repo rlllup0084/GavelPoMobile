@@ -8,7 +8,6 @@ namespace GavelPoMobile.Maui.ViewModels;
 public class PendingViewModel : BaseViewModel, IQueryAttributable {
     int nextPage = 1;
     int totalPages = 1;
-    bool isLoadingMore = false;
     public PendingViewModel() {
         Title = "Pending";
         Items = new ObservableCollection<PurchaseOrderData>();
@@ -20,8 +19,7 @@ public class PendingViewModel : BaseViewModel, IQueryAttributable {
     }
 
     async void ExecuteOpenPurchaseOrder(PurchaseOrderData purchaseOrder) {
-        //Console.WriteLine(purchaseOrder.Id);
-        await Navigation.NavigateToAsync<PurchaseOrderViewModel>(purchaseOrder.Id.ToString());
+        await Navigation.NavigateToAsync<PendingPurchaseOrderViewModel>(purchaseOrder.Id.ToString());
     }
 
     async void ExecuteApprovePurchaseOrder(PurchaseOrderData purchaseOrder) {
@@ -55,17 +53,11 @@ public class PendingViewModel : BaseViewModel, IQueryAttributable {
     public Command<PurchaseOrderData> DisapprovePurchaseOrder { get; }
 
     void ExecuteLoadMoreCommand() {
-        if (isLoadingMore) {
-            return;
-        }
-
-        isLoadingMore = true;
         Task.Run(() => {
             Thread.Sleep(1000);
             if (nextPage <= totalPages) {
                 LoadData(nextPage);
             }
-            isLoadingMore = false;
             IsRefreshing = false;
         });
     }

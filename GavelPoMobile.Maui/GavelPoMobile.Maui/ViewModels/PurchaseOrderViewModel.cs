@@ -127,6 +127,7 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
         }
         HasError = false;
         StatusIcon = "pending.png";
+        await Navigation.GoBackAsync(this.id);
     }
 
     async void ExecuteDisapproveCommand() {
@@ -141,6 +142,7 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
             }
             HasError = false;
             StatusIcon = "disapprove.png";
+            await Navigation.GoBackAsync(this.id);
         } else if (btnDisapproveText == "Cancel") {
             Remarks = retRemarks;
             BtnApproveText = "Approve";
@@ -160,7 +162,7 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
             }
             HasError = false;
             StatusIcon = "approve.png";
-            await Navigation.GoBackAsync();
+            await Navigation.GoBackAsync(this.id);
         } else if (btnApproveText == "Save") {
             var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, this.status, this.remarks);
             if (!string.IsNullOrEmpty(response)) {

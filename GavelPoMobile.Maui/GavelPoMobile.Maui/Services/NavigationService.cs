@@ -1,4 +1,5 @@
 ﻿using GavelPoMobile.Maui.ViewModels;
+using Newtonsoft.Json;
 using System.Web;
 
 namespace GavelPoMobile.Maui.Services;
@@ -18,6 +19,10 @@ public class NavigationService : INavigationService {
 
     public async Task GoBackAsync() {
         await Shell.Current.GoToAsync("..");
+    }
+
+    public async Task GoBackAsync(object parameter) {
+        await Shell.Current.GoToAsync($"..?id={parameter}");
     }
 
     async Task InternalNavigateToAsync(Type viewModelType, object parameter, bool isAbsoluteRoute = false) {

@@ -1,10 +1,11 @@
 ﻿using GavelPoMobile.Maui.Models;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Web;
 using System.Windows.Input;
 
 namespace GavelPoMobile.Maui.ViewModels;
-public class IncomingViewModel : BaseViewModel {
+public class IncomingViewModel : BaseViewModel, IQueryAttributable {
     int nextPage = 1;
     int totalPages = 1;
     public IncomingViewModel() {
@@ -54,7 +55,7 @@ public class IncomingViewModel : BaseViewModel {
         get => this.isRefreshing;
         set => SetProperty(ref this.isRefreshing, value);
     }
-
+    
     public ObservableCollection<PurchaseOrderData> Items { get; private set; }
 
     ICommand loadMoreCommand = null;
@@ -82,6 +83,14 @@ public class IncomingViewModel : BaseViewModel {
             nextPage++;
         } catch (Exception) {
             await Shell.Current.DisplayAlert("Technical Difficulties", "Please ask your system administrator for assistance or try again later.", "OK");
+        }
+    }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query) {
+        string id = HttpUtility.UrlDecode(query["id"] as string);
+        var itemToRemove = Items.FirstOrDefault(item => item.Id == Convert.ToInt32(id));
+        if (itemToRemove != null) {
+            Items.Remove(itemToRemove);
         }
     }
 }

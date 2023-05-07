@@ -9,4 +9,6 @@ public interface INavigationService {
     Task NavigateToAsync<TViewModel>(object parameter) where TViewModel : BaseViewModel;
 
     Task GoBackAsync();
+
+    Task GoBackAsync(object parameters);
 }

@@ -25,6 +25,8 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
 
     private string btnApproveText;
     private string btnDisapproveText;
+    private string errorText;
+    private bool hasError;
 
     public string BtnApproveText {
         get => btnApproveText;
@@ -97,6 +99,16 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
         set => SetProperty(ref isRemarksDirty, value);
     }
 
+    public string ErrorText {
+        get => errorText;
+        set => SetProperty(ref errorText, value);
+    }
+
+    public bool HasError {
+        get => hasError;
+        set => SetProperty(ref hasError, value);
+    }
+
     public PurchaseOrderViewModel() {
         ShowDetailsCommand = new Command(ExecuteShowDetailsCommand);
         ApproveCommand = new Command(ExecuteApproveCommand);
@@ -104,13 +116,31 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
         PendingCommand = new Command(ExecutePendingCommand);
     }
 
-    private void ExecutePendingCommand() {
-        Console.WriteLine("ExecutePendingCommand");
+    async void ExecutePendingCommand() {
+        // Pending == 5
+        var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, 5, this.remarks);
+        if (!string.IsNullOrEmpty(response)) {
+            var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+            ErrorText = errorData.Title;
+            HasError = true;
+            return;
+        }
+        HasError = false;
+        StatusIcon = "pending.png";
     }
 
-    private void ExecuteDisapproveCommand() {
+    async void ExecuteDisapproveCommand() {
+        // Disapprove == 4
         if (btnDisapproveText == "Disapprove") {
-            Console.WriteLine("ExecuteDisapproveCommand");
+            var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, 4, this.remarks);
+            if (!string.IsNullOrEmpty(response)) {
+                var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+                ErrorText = errorData.Title;
+                HasError = true;
+                return;
+            }
+            HasError = false;
+            StatusIcon = "disapprove.png";
         } else if (btnDisapproveText == "Cancel") {
             Remarks = retRemarks;
             BtnApproveText = "Approve";
@@ -118,10 +148,28 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
         }
     }
 
-    private void ExecuteApproveCommand() {
+    async void ExecuteApproveCommand() {
+        // Approve == 1
         if (btnApproveText == "Approve") {
-            Console.WriteLine("ExecuteApproveCommand");
+            var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, 1, this.remarks);
+            if (!string.IsNullOrEmpty(response)) {
+                var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+                ErrorText = errorData.Title;
+                HasError = true;
+                return;
+            }
+            HasError = false;
+            StatusIcon = "approve.png";
+            await Navigation.GoBackAsync();
         } else if (btnApproveText == "Save") {
+            var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, this.status, this.remarks);
+            if (!string.IsNullOrEmpty(response)) {
+                var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+                ErrorText = errorData.Title;
+                HasError = true;
+                return;
+            }
+            HasError = false;
             BtnApproveText = "Approve";
             BtnDisapproveText = "Disapprove";
         }

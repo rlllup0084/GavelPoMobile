@@ -10,4 +10,6 @@ public interface IPurchaseOrderService {
     Task<string> GetPurchaseOrderById(int id);
 
     Task<string> UpdatePurchaseOrderDetailStatus(int id, int status, string remarks);
+
+    Task<string> UpdatePurchaseOrderStatus(int id, int status, string remarks);
 }

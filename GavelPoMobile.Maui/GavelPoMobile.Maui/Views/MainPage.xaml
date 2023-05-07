@@ -19,6 +19,9 @@
         <Tab Title ="All" Icon="all">
             <ShellContent ContentTemplate="{DataTemplate local:HistoryPage}" />
         </Tab>
+        <Tab Title ="Account" Icon="account">
+            <ShellContent ContentTemplate="{DataTemplate local:AccountPage}" />
+        </Tab>
     </TabBar>
     <TabBar>
         <ShellContent ContentTemplate="{DataTemplate local:LoginPage}"

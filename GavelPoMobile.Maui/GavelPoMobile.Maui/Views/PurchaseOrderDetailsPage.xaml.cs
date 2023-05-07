@@ -40,22 +40,21 @@ public partial class PurchaseOrderDetailsPage : ContentPage
     }
 
     private void OnHold(object sender, SwipeItemTapEventArgs e) {
-
+        PurchaseOrderDetail item = (PurchaseOrderDetail)e.Item;
+        grid.SetCellValue(e.RowHandle, grid.Columns["LineApprovalStatus"], 0);
+        grid.RefreshData();
     }
 
     private void OnRelease(object sender, SwipeItemTapEventArgs e) {
-
+        PurchaseOrderDetail item = (PurchaseOrderDetail)e.Item;
+        grid.SetCellValue(e.RowHandle, grid.Columns["LineApprovalStatus"], 1);
+        grid.RefreshData();
     }
 
     private void grid_Tap(object sender, DataGridGestureEventArgs e) {
         DataGridView dataGridView = (DataGridView)sender;
         if (e.Item == null || dataGridView.EditorShowMode == EditorShowMode.Tap)
             return;
-    }
-
-    private void grid_ValidateCell(object sender, ValidateCellEventArgs e) {
-        if (e.FieldName == "Remarks" && !string.IsNullOrWhiteSpace((string)e.NewValue)) {
-        }
     }
 
     private void grid_EditorShowing(object sender, EditorShowingEventArgs e) {
@@ -67,8 +66,4 @@ public partial class PurchaseOrderDetailsPage : ContentPage
             }
         } else { e.Cancel = true; }
     }
-
-    private void grid_PropertyChanged(object sender, PropertyChangedEventArgs e) {
-    }
-
 }

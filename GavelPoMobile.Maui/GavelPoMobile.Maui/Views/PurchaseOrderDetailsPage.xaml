@@ -20,20 +20,18 @@
                           IsPullToRefreshEnabled="true"
                           EditorShowMode="Tap"
                           Tap="grid_Tap"
-                          ValidateCell="grid_ValidateCell"
                           EditorShowing="grid_EditorShowing"
                           PullToRefreshCommand="{Binding PullToRefreshCommand}" 
                           IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
-                          PropertyChanged="grid_PropertyChanged"
                           CustomCellAppearance="grid_CustomCellAppearance" 
                               IsColumnHeaderVisible="False" 
                               SelectionMode="None">
             <dxg:DataGridView.StartSwipeItems>
-                <dxg:SwipeItem Caption="Purchase Line Info" Command="{Binding Source={RelativeSource AncestorType={x:Type local:PurchaseOrderDetailsViewModel}}, Path=OpenPurchaseOrderDetail}" />
+                <!--<dxg:SwipeItem Caption="Purchase Line Info" Command="{Binding Source={RelativeSource AncestorType={x:Type local:PurchaseOrderDetailsViewModel}}, Path=OpenPurchaseOrderDetail}" />-->
+                <dxg:SwipeItem Caption="Hold" Tap="OnHold" Command="{Binding Source={RelativeSource AncestorType={x:Type local:PurchaseOrderDetailsViewModel}}, Path=HoldPurchaseOrderDetail}" BackgroundColor="Red" FontColor="White"/>
             </dxg:DataGridView.StartSwipeItems>
             <dxg:DataGridView.EndSwipeItems>
-                <dxg:SwipeItem Caption="Hold" Tap="OnHold" BackgroundColor="Red" FontColor="White"/>
-                <dxg:SwipeItem Caption="Release" Tap="OnRelease" BackgroundColor="Orange" FontColor="White"/>
+                <dxg:SwipeItem Caption="Release" Tap="OnRelease" Command="{Binding Source={RelativeSource AncestorType={x:Type local:PurchaseOrderDetailsViewModel}}, Path=ReleasePurchaseOrderDetail}" BackgroundColor="Orange" FontColor="White"/>
             </dxg:DataGridView.EndSwipeItems>
             <dxg:DataGridView.AdvancedColumnLayout>
                 <dxg:AdvancedColumnLayout>

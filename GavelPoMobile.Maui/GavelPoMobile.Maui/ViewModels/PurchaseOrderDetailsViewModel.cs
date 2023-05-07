@@ -1,6 +1,7 @@
 ﻿using GavelPoMobile.Maui.Models;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
 using System.Web;
 using System.Windows.Input;
 
@@ -43,7 +44,30 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
     public PurchaseOrderDetailsViewModel() {
         Items = new ObservableCollection<PurchaseOrderDetail>();
         PullToRefreshCommand = new Command(ExecutePullToRefreshCommand);
-        OpenPurchaseOrderDetail = new Command<PurchaseOrderDetail>(ExecuteOpenPurchaseOrderDetail);
+        HoldPurchaseOrderDetail = new Command<PurchaseOrderDetail>(ExecuteHoldPurchaseOrderDetailCommand);
+        ReleasePurchaseOrderDetail = new Command<PurchaseOrderDetail>(ExecuteReleasePurchaseOrderDetailCommand);
+    }
+
+    async void ExecuteReleasePurchaseOrderDetailCommand(PurchaseOrderDetail obj) {
+        var response = await PurchaseOrderService.UpdatePurchaseOrderDetailStatus(obj.Id, 1, obj.Remarks);
+        if (!string.IsNullOrEmpty(response)) {
+            var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+            ErrorText = errorData.Title;
+            HasError = true;
+            return;
+        }
+        HasError = false;
+    }
+
+    async void ExecuteHoldPurchaseOrderDetailCommand(PurchaseOrderDetail obj) {
+        var response = await PurchaseOrderService.UpdatePurchaseOrderDetailStatus(obj.Id, 0, obj.Remarks);
+        if (!string.IsNullOrEmpty(response)) {
+            var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+            ErrorText = errorData.Title;
+            HasError = true;
+            return;
+        }
+        HasError = false;
     }
 
     void ExecutePullToRefreshCommand() {
@@ -79,12 +103,9 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
         set => SetProperty(ref this.pullToRefreshCommand, value);
     }
 
-    public Command<PurchaseOrderDetail> OpenPurchaseOrderDetail { get; }
+    public Command<PurchaseOrderDetail> HoldPurchaseOrderDetail { get; }
 
-    async void ExecuteOpenPurchaseOrderDetail(PurchaseOrderDetail purchaseOrderDetail) {
-        //Console.WriteLine(purchaseOrderDetail.Id);
-        await Navigation.NavigateToAsync<PurchaseOrderDetailInfoViewModel>(purchaseOrderDetail.Id.ToString());
-    }
+    public Command<PurchaseOrderDetail> ReleasePurchaseOrderDetail { get; }
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query) {
         string id = HttpUtility.UrlDecode(query["id"] as string);
@@ -120,9 +141,6 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
                 default:
                     break;
             }
-            //foreach (var item in purchaseOrder.PurchaseOrderDetails) {
-            //    Items.Add(item);
-            //}
             List<PurchaseOrderDetail> purchaseOrderDetails = purchaseOrder.PurchaseOrderDetails.Select(x => new PurchaseOrderDetail {
                 Id = x.Id,
                 SourceNo = x.SourceNo,

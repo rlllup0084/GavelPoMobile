@@ -37,7 +37,7 @@ public class IncomingViewModel : BaseViewModel, IQueryAttributable {
     }
 
     async void ExecuteDisapprovePurchaseOrder(PurchaseOrderData purchaseOrder) {
-        var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(purchaseOrder.Id, 5, purchaseOrder.Remarks);
+        var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(purchaseOrder.Id, 4, purchaseOrder.Remarks);
         if (!string.IsNullOrEmpty(response)) {
             var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
             return;
@@ -49,7 +49,7 @@ public class IncomingViewModel : BaseViewModel, IQueryAttributable {
     }
 
     async void ExecutePendingPurchaseOrder(PurchaseOrderData purchaseOrder) {
-        var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(purchaseOrder.Id, 4, purchaseOrder.Remarks);
+        var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(purchaseOrder.Id, 5, purchaseOrder.Remarks);
         if (!string.IsNullOrEmpty(response)) {
             var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
             return;

@@ -2,23 +2,46 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
+             xmlns:local="clr-namespace:GavelPoMobile.Maui.ViewModels"
              x:Class="GavelPoMobile.Maui.Views.PendingPage"
              Title="{Binding Title}">
     <ContentPage.Content>
         <dxg:DataGridView x:Name="grid"
-                              ItemsSource="{Binding Items}"
-                              IsLoadMoreEnabled="True" 
-                              LoadMoreCommand="{Binding LoadMoreCommand}" 
-                              IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}">
-            <dxg:DataGridView.Columns>
-                <dxg:TextColumn FieldName="SourceNo" Caption="No." MinWidth="150" FixedStyle="Start"/>
-                <dxg:DateColumn FieldName="EntryDate" Caption="Entry Date" MinWidth="115" 
-                                    DisplayFormat="MM/dd/yyyy" 
-                                    HorizontalContentAlignment="Center"/>
-                <dxg:TextColumn FieldName="Vendor" MinWidth="250"/>
-                <dxg:TextColumn FieldName="ReferenceNo" Caption="Reference No." MinWidth="150"/>
-                <dxg:NumberColumn FieldName="Total" Width="115" DisplayFormat="N2"/>
-            </dxg:DataGridView.Columns>
+                          ItemsSource="{Binding Items}"
+                          IsPullToRefreshEnabled="true"
+                          IsLoadMoreEnabled="True" 
+                          LoadMoreCommand="{Binding LoadMoreCommand}" 
+                          PullToRefreshCommand="{Binding PullToRefreshCommand}" 
+                          IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                          CustomCellAppearance="grid_CustomCellAppearance" IsColumnHeaderVisible="False" SelectionMode="None">
+            <dxg:DataGridView.StartSwipeItems>
+                <dxg:SwipeItem Caption="Purchase Info" Command="{Binding Source={RelativeSource AncestorType={x:Type local:PendingViewModel}}, Path=OpenPurchaseOrder}" />
+            </dxg:DataGridView.StartSwipeItems>
+            <dxg:DataGridView.EndSwipeItems>
+                <dxg:SwipeItem Caption="Approve" 
+                               Command="{Binding Source={RelativeSource AncestorType={x:Type local:PendingViewModel}}, Path=ApprovePurchaseOrder}" 
+                               BackgroundColor="Green" FontColor="White"/>
+                <dxg:SwipeItem Caption="Disapprove" 
+                               Command="{Binding Source={RelativeSource AncestorType={x:Type local:PendingViewModel}}, Path=DisapprovePurchaseOrder}" 
+                               BackgroundColor="Red" FontColor="White"/>
+            </dxg:DataGridView.EndSwipeItems>
+            <dxg:DataGridView.AdvancedColumnLayout>
+                <dxg:AdvancedColumnLayout>
+                    <dxg:AdvancedColumnLayout.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </dxg:AdvancedColumnLayout.ColumnDefinitions>
+                    <dxg:AdvancedColumnLayout.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </dxg:AdvancedColumnLayout.RowDefinitions>
+                </dxg:AdvancedColumnLayout>
+            </dxg:DataGridView.AdvancedColumnLayout>
+            <dxg:TextColumn FieldName="SourceNo" Caption="No." Row="0" Column="0"/>
+            <dxg:DateColumn FieldName="EntryDate" Caption="Entry Date" DisplayFormat="MM/dd/yyyy" Row="0" Column="1"/>
+            <dxg:NumberColumn FieldName="Total" DisplayFormat="₱#,##0.00" Row="0" Column="2"/>
+            <dxg:TextColumn FieldName="Vendor" Row="1" ColumnSpan="3"/>
         </dxg:DataGridView>
     </ContentPage.Content>
 </ContentPage>

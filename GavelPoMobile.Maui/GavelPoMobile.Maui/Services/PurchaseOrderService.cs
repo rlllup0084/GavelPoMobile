@@ -62,7 +62,7 @@ public class PurchaseOrderService : IPurchaseOrderService {
     public async Task<string> UpdatePurchaseOrderDetailStatus(int id, int status, string remarks) {
         var body = new {
             id = id,
-            status = status,
+            lineApprovalStatus = status,
             remarks = remarks
         };
         var json = JsonConvert.SerializeObject(body);
@@ -72,6 +72,11 @@ public class PurchaseOrderService : IPurchaseOrderService {
         request.Content = new StringContent(json, Encoding.UTF8, "application/json");
         var response = await HttpClient.SendAsync(request);
         var responseContent = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode) {
+            return string.Empty;
+        }
+
         return responseContent;
     }
 }

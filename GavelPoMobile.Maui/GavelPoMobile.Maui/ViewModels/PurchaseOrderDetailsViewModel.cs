@@ -1,9 +1,6 @@
-﻿using DevExpress.Maui.Core.Internal;
-using GavelPoMobile.Maui.Models;
-using Microsoft.Maui;
+﻿using GavelPoMobile.Maui.Models;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Web;
 using System.Windows.Input;
 
@@ -28,9 +25,19 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
         set => SetProperty(ref sourceNo, value);
     }
 
-    public ObservableCollection<PurchaseOrderDetail> Items { 
-        get => items; 
-        set => SetProperty(ref items, value); 
+    public ObservableCollection<PurchaseOrderDetail> Items {
+        get => items;
+        set => SetProperty(ref items, value);
+    }
+
+    public string ErrorText {
+        get => errorText;
+        set => SetProperty(ref errorText, value);
+    }
+
+    public bool HasError {
+        get => hasError;
+        set => SetProperty(ref hasError, value);
     }
 
     public PurchaseOrderDetailsViewModel() {
@@ -64,6 +71,8 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
 
     ICommand pullToRefreshCommand = null;
     private ObservableCollection<PurchaseOrderDetail> items;
+    private string errorText;
+    private bool hasError;
 
     public ICommand PullToRefreshCommand {
         get => pullToRefreshCommand;
@@ -131,7 +140,7 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
             }).ToList();
 
             foreach (var item in purchaseOrderDetails) {
-                item.RemarksChanged += Item_RemarksChanged;
+                item.DetailChanged += Item_DetailChangedAsync;
                 Items.Add(item);
             }
         } catch (Exception) {
@@ -139,8 +148,14 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
         }
     }
 
-    private void Item_RemarksChanged(object sender, EventArgs e) {
-        // TODO: Update to database
-        Console.WriteLine("Remarks has changed");
+    private async Task Item_DetailChangedAsync(object sender, PurchaseOrderDetailChangedEventArgs e) {
+        var response = await PurchaseOrderService.UpdatePurchaseOrderDetailStatus(e.DetailId, e.Status, e.NewValue.ToString());
+        if (!string.IsNullOrEmpty(response)) {
+            var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+            ErrorText = errorData.Title;
+            HasError = true;
+            return;
+        }
+        HasError = false;
     }
 }

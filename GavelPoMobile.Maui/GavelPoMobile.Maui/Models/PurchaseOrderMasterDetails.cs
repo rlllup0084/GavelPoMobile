@@ -32,7 +32,7 @@ public class PurchaseOrderDetail : INotifyPropertyChanged {
     public string CostCenter { get; set; }
     public string RequestedBy { get; set; }
     public decimal? Total { get; set; }
-    public int? LineApprovalStatus { get; set; }
+    public int LineApprovalStatus { get; set; }
     public string Remarks {
         get => remarks;
         set {
@@ -42,30 +42,36 @@ public class PurchaseOrderDetail : INotifyPropertyChanged {
                 if (oldRemarks != null && oldRemarks != "Has no remarks...") {
                     OnPropertyChanged(nameof(Remarks));
                     //UpdateDatabase();
-                    RemarksChanged?.Invoke(this, EventArgs.Empty);
+                    DetailChanged?.Invoke(this, new PurchaseOrderDetailChangedEventArgs(nameof(Remarks), oldRemarks, remarks, this.Id, this.LineApprovalStatus));
                 }
             }
         }
     }
     public bool HasRemarks { get; set; } = false;
 
-    public event EventHandler RemarksChanged;
+    public event AsyncEventHandler<PurchaseOrderDetailChangedEventArgs> DetailChanged;
 
     public event PropertyChangedEventHandler PropertyChanged;
 
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null) {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-
-    //private void UpdateDatabase() {
-    //    Console.WriteLine("Remarks Changed");
-    //    // Implement your database update logic here
-    //    // For example:
-    //    // using (var dbContext = new MyDbContext())
-    //    // {
-    //    //     var entity = dbContext.PurchaseOrderDetails.FirstOrDefault(x => x.Id == this.Id);
-    //    //     entity.Remarks = this.Remarks;
-    //    //     dbContext.SaveChanges();
-    //    // }
-    //}
 }
+
+public class PurchaseOrderDetailChangedEventArgs : EventArgs {
+    public string PropertyName { get; }
+    public int DetailId { get; set; }
+    public int Status { get; set; }
+    public object OldValue { get; }
+    public object NewValue { get; }
+
+    public PurchaseOrderDetailChangedEventArgs(string propertyName, object oldValue, object newValue, int detailId, int status) {
+        PropertyName = propertyName;
+        OldValue = oldValue;
+        NewValue = newValue;
+        DetailId = detailId;
+        Status = status;
+    }
+}
+
+public delegate Task AsyncEventHandler<TEventArgs>(object sender, TEventArgs e) where TEventArgs : EventArgs;

@@ -23,6 +23,8 @@ public partial class App : Application {
 
         Routing.RegisterRoute(typeof(PurchaseOrderDetailsPage).FullName, typeof(PurchaseOrderDetailsPage));
 
+        Routing.RegisterRoute(typeof(OtherPurchaseOrderDetailsPage).FullName, typeof(OtherPurchaseOrderDetailsPage));
+
         Routing.RegisterRoute(typeof(PurchaseOrderDetailInfoPage).FullName, typeof(PurchaseOrderDetailInfoPage));
 
         MainPage = new MainPage();

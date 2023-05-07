@@ -119,7 +119,7 @@ public class OtherPurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
     }
 
     private async void ExecuteShowDetailsCommand() {
-        await Navigation.NavigateToAsync<PurchaseOrderDetailsViewModel>(id.ToString());
+        await Navigation.NavigateToAsync<OtherPurchaseOrderDetailsViewModel>(id.ToString());
     }
 
     public async Task LoadPurchaseOrderId(string purchaseOrderId) {

@@ -26,7 +26,11 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\myicon.svg" Color="#512BD4" />
+		<MauiSplashScreen Include="Resources\AppIcon\myicon.svg">
+		  <Color>#512BD4</Color>
+		  <BaseSize>128,128</BaseSize>
+		</MauiSplashScreen>
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\mysplash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -40,6 +44,7 @@
 
 	<ItemGroup>
 	  <None Remove="Platforms\Android\Resources\xml\provider_paths.xml" />
+	  <None Remove="Resources\AppIcon\myicon.svg" />
 	  <None Remove="Resources\Images\editorsnotes.svg" />
 	</ItemGroup>
 

@@ -15,6 +15,8 @@ public partial class App : Application {
 
         DependencyService.Register<PurchaseOrderService>();
 
+        Routing.RegisterRoute(typeof(LoginPage).FullName, typeof(LoginPage));
+
         Routing.RegisterRoute(typeof(PurchaseOrderPage).FullName, typeof(PurchaseOrderPage));
 
         Routing.RegisterRoute(typeof(OtherPurchaseOrderPage).FullName, typeof(OtherPurchaseOrderPage));

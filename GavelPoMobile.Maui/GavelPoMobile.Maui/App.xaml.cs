@@ -29,6 +29,7 @@ public partial class App : Application {
 
         Routing.RegisterRoute(typeof(PurchaseOrderDetailInfoPage).FullName, typeof(PurchaseOrderDetailInfoPage));
 
+        Current.UserAppTheme = AppTheme.Light;
         MainPage = new MainPage();
         // Use the NavigateToAsync<ViewModelName> method
         // to display the corresponding view.

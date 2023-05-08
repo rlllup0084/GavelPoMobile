@@ -1,6 +1,7 @@
 ﻿using DevExpress.Maui.Core.Internal;
 using GavelPoMobile.Maui.Common;
 using GavelPoMobile.Maui.Models;
+using GavelPoMobile.Maui.Views;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
@@ -20,6 +21,12 @@ public class PurchaseOrderService : IPurchaseOrderService {
 
         var authToken = await SecureStorage.GetAsync("gpo_jwt_token");
 
+        if (authToken != null && !JwtTokenValidator.IsTokenValid(authToken)) {
+            await Application.Current.MainPage.DisplayAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+            await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
+            return null;
+        }
+
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
 
         var response = await HttpClient.SendAsync(request);
@@ -35,6 +42,12 @@ public class PurchaseOrderService : IPurchaseOrderService {
 
         var authToken = await SecureStorage.GetAsync("gpo_jwt_token");
 
+        if (authToken != null && !JwtTokenValidator.IsTokenValid(authToken)) {
+            await Application.Current.MainPage.DisplayAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+            await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
+            return null;
+        }
+
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
 
         var response = await HttpClient.SendAsync(request);
@@ -49,6 +62,12 @@ public class PurchaseOrderService : IPurchaseOrderService {
         var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiUrl}/order/{id}");
 
         var authToken = await SecureStorage.GetAsync("gpo_jwt_token");
+
+        if (authToken != null && !JwtTokenValidator.IsTokenValid(authToken)) {
+            await Application.Current.MainPage.DisplayAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+            await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
+            return null;
+        }
 
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
 
@@ -68,6 +87,13 @@ public class PurchaseOrderService : IPurchaseOrderService {
         var json = JsonConvert.SerializeObject(body);
         var request = new HttpRequestMessage(HttpMethod.Put, $"{_apiUrl}/detail");
         var authToken = await SecureStorage.GetAsync("gpo_jwt_token");
+
+        if (authToken != null && !JwtTokenValidator.IsTokenValid(authToken)) {
+            await Application.Current.MainPage.DisplayAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+            await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
+            return null;
+        }
+
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
         request.Content = new StringContent(json, Encoding.UTF8, "application/json");
         var response = await HttpClient.SendAsync(request);
@@ -89,6 +115,13 @@ public class PurchaseOrderService : IPurchaseOrderService {
         var json = JsonConvert.SerializeObject(body);
         var request = new HttpRequestMessage(HttpMethod.Put, $"{_apiUrl}/order");
         var authToken = await SecureStorage.GetAsync("gpo_jwt_token");
+
+        if (authToken != null && !JwtTokenValidator.IsTokenValid(authToken)) {
+            await Application.Current.MainPage.DisplayAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+            await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
+            return null;
+        }
+
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
         request.Content = new StringContent(json, Encoding.UTF8, "application/json");
         var response = await HttpClient.SendAsync(request);

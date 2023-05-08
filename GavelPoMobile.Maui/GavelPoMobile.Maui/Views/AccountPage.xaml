@@ -23,7 +23,9 @@
                 </StackLayout>
             </Grid>
             <Grid Grid.Row="1" RowDefinitions="Auto, Auto, Auto" Padding="25,25,25,15" RowSpacing="10">
-                <Label Grid.Row="0" Text="Account" FontFamily="Roboto-Bold" FontSize="18" TextColor="{StaticResource NormalText}"/>
+                <Frame BorderColor="White" HorizontalOptions="Center" WidthRequest="150" HeightRequest="150" HasShadow="False" CornerRadius="55" Padding="0" IsClippedToBounds="True">
+                    <Image Source="account" Aspect="AspectFill"/>
+                </Frame>
                 <Label Grid.Row="1" Text="You are logged in as [Username]. Click the button below to logout." FontFamily="Roboto" FontSize="16" TextColor="{StaticResource NormalText}"/>
                 <dxco:SimpleButton Grid.Row="2" Text="Logout"/>
             </Grid>

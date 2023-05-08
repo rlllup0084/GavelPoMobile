@@ -18,14 +18,14 @@
             <Grid>
                 <Image Source="background" HorizontalOptions="FillAndExpand" Aspect="Fill"/>
                 <StackLayout VerticalOptions="Center" Margin="0,10,0,10">
-                    <Label Text="GAVEL P.O. Online" FontFamily="Univia-Pro" FontSize="25" HorizontalOptions="Center" TextColor="{StaticResource NormalHeaderText}"/>
-                    <Label Text="Purchase Order Approval System" FontFamily="Univia-Pro" FontSize="14" HorizontalOptions="Center" TextColor="{StaticResource NormalHeaderText}"/>
+                    <Label Text="GAVEL I.S." FontSize="25" FontAttributes='Bold' HorizontalOptions="Center" TextColor="{StaticResource NormalHeaderText}"/>
+                    <Label Text="Online Purchase Order Approver" FontSize="14" HorizontalOptions="Center" TextColor="{StaticResource NormalHeaderText}"/>
                 </StackLayout>
             </Grid>
             <Grid Grid.Row="1" RowDefinitions="Auto, Auto, Auto" Padding="25,25,25,15" RowSpacing="10">
-                <Label Grid.Row="0" Text="Streamlining GAVEL Logistics Co., Inc. Purchasing Process" FontFamily="Roboto-Bold" FontSize="18" TextColor="{StaticResource NormalText}"/>
-                <Label Grid.Row="1" Text="Is a mobile application developed for Gavel Logistics Co., Inc. to streamline the approval process of purchase orders. The app enables authorized users to review and approve purchase orders on-the-go, eliminating the need for physical signatures and paper documentation." FontFamily="Roboto" FontSize="16" TextColor="{StaticResource NormalText}"/>
-                <Label Grid.Row="2" Text="With this app, Gavel Logistics Co., Inc. can efficiently manage their purchasing process and increase productivity while reducing paperwork and manual tasks." FontFamily="Roboto" FontSize="16" TextColor="{StaticResource NormalText}" Padding="0,0,0,7"/>
+                <Label Grid.Row="0" Text="Streamlining GAVEL Logistics Co., Inc. Purchasing Process" FontSize="18" FontAttributes="Bold" TextColor="{StaticResource NormalText}"/>
+                <Label Grid.Row="1" Text="Is a mobile application developed for Gavel Logistics Co., Inc. to streamline the approval process of purchase orders. The app enables authorized users to review and approve purchase orders on-the-go, eliminating the need for physical signatures and paper documentation." FontSize="16" TextColor="{StaticResource NormalText}"/>
+                <Label Grid.Row="2" Text="With this app, Gavel Logistics Co., Inc. can efficiently manage their purchasing process and increase productivity while reducing paperwork and manual tasks." FontSize="16" TextColor="{StaticResource NormalText}" Padding="0,0,0,7"/>
             </Grid>
         </Grid>
     </ContentPage.Content>

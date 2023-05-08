@@ -3,8 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:dxg="clr-namespace:DevExpress.Maui.DataGrid;assembly=DevExpress.Maui.DataGrid"
              xmlns:local="clr-namespace:GavelPoMobile.Maui.ViewModels"
+             xmlns:views="clr-namespace:GavelPoMobile.Maui.Views"
              x:Class="GavelPoMobile.Maui.Views.HistoryPage"
              Title="{Binding Title}">
+    <ContentPage.Resources>
+        <views:PoStatusImageConverter x:Key="statusToImageConverter" />
+    </ContentPage.Resources>
     <ContentPage.Content>
         <dxg:DataGridView x:Name="grid"
                           ItemsSource="{Binding Items}"
@@ -33,7 +37,15 @@
             <dxg:TextColumn FieldName="SourceNo" Caption="No." Row="0" Column="0"/>
             <dxg:DateColumn FieldName="EntryDate" Caption="Entry Date" DisplayFormat="MM/dd/yyyy" Row="0" Column="1"/>
             <dxg:NumberColumn FieldName="Total" DisplayFormat="₱#,##0.00" Row="0" Column="2"/>
-            <dxg:TextColumn FieldName="Vendor" Row="1" ColumnSpan="3"/>
+            <dxg:TextColumn FieldName="Vendor" Row="1" ColumnSpan="2"/>
+            <dxg:TemplateColumn FieldName="Status" Row="1" Column="2">
+                <dxg:TemplateColumn.DisplayTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding Path=Item.Status, Converter={StaticResource statusToImageConverter}}" 
+                                HeightRequest="24" WidthRequest="24" />
+                    </DataTemplate>
+                </dxg:TemplateColumn.DisplayTemplate>
+            </dxg:TemplateColumn>
         </dxg:DataGridView>
     </ContentPage.Content>
 </ContentPage>

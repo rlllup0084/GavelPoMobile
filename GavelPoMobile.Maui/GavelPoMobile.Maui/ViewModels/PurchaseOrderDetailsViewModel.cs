@@ -49,25 +49,43 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
     }
 
     async void ExecuteReleasePurchaseOrderDetailCommand(PurchaseOrderDetail obj) {
-        var response = await PurchaseOrderService.UpdatePurchaseOrderDetailStatus(obj.Id, 1, obj.Remarks);
-        if (!string.IsNullOrEmpty(response)) {
-            var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
-            ErrorText = errorData.Title;
-            HasError = true;
-            return;
+        try {
+            var response = await PurchaseOrderService.UpdatePurchaseOrderDetailStatus(obj.Id, 1, obj.Remarks);
+            if (!string.IsNullOrEmpty(response)) {
+                var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+                ErrorText = errorData.Title;
+                HasError = true;
+                return;
+            }
+            HasError = false;
+        } catch (Exception ex) {
+            if (ex.Message == "Session Expired") {
+                AlertService.ShowAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+                await Navigation.NavigateToAsync<LoginViewModel>(true);
+            } else {
+                AlertService.ShowAlert("Technical Difficulties", "Please contact your system administrator for assistance or try again later.", "OK");
+            }
         }
-        HasError = false;
     }
 
     async void ExecuteHoldPurchaseOrderDetailCommand(PurchaseOrderDetail obj) {
-        var response = await PurchaseOrderService.UpdatePurchaseOrderDetailStatus(obj.Id, 0, obj.Remarks);
-        if (!string.IsNullOrEmpty(response)) {
-            var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
-            ErrorText = errorData.Title;
-            HasError = true;
-            return;
+        try {
+            var response = await PurchaseOrderService.UpdatePurchaseOrderDetailStatus(obj.Id, 0, obj.Remarks);
+            if (!string.IsNullOrEmpty(response)) {
+                var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+                ErrorText = errorData.Title;
+                HasError = true;
+                return;
+            }
+            HasError = false;
+        } catch (Exception ex) {
+            if (ex.Message == "Session Expired") {
+                AlertService.ShowAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+                await Navigation.NavigateToAsync<LoginViewModel>(true);
+            } else {
+                AlertService.ShowAlert("Technical Difficulties", "Please contact your system administrator for assistance or try again later.", "OK");
+            }
         }
-        HasError = false;
     }
 
     void ExecutePullToRefreshCommand() {
@@ -114,9 +132,10 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
 
     private async Task LoadPurchaseOrderDetails(string id) {
         this.id = id;
-        var response = await PurchaseOrderService.GetPurchaseOrderById(Convert.ToInt32(id));
 
         try {
+            var response = await PurchaseOrderService.GetPurchaseOrderById(Convert.ToInt32(id));
+
             var purchaseOrder = JsonConvert.DeserializeObject<PurchaseOrderMasterDetails>(response);
             Title = purchaseOrder.SourceNo;
             switch (purchaseOrder.Status) {
@@ -161,19 +180,33 @@ public class PurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributable {
                 item.DetailChanged += Item_DetailChangedAsync;
                 Items.Add(item);
             }
-        } catch (Exception) {
-            await Shell.Current.DisplayAlert("Technical Difficulties", "Please ask your system administrator for assistance or try again later.", "OK");
+        } catch (Exception ex) {
+            if (ex.Message == "Session Expired") {
+                AlertService.ShowAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+                await Navigation.NavigateToAsync<LoginViewModel>(true);
+            } else {
+                AlertService.ShowAlert("Technical Difficulties", "Please contact your system administrator for assistance or try again later.", "OK");
+            }
         }
     }
 
     private async Task Item_DetailChangedAsync(object sender, PurchaseOrderDetailChangedEventArgs e) {
-        var response = await PurchaseOrderService.UpdatePurchaseOrderDetailStatus(e.DetailId, e.Status, e.NewValue.ToString());
-        if (!string.IsNullOrEmpty(response)) {
-            var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
-            ErrorText = errorData.Title;
-            HasError = true;
-            return;
+        try {
+            var response = await PurchaseOrderService.UpdatePurchaseOrderDetailStatus(e.DetailId, e.Status, e.NewValue.ToString());
+            if (!string.IsNullOrEmpty(response)) {
+                var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+                ErrorText = errorData.Title;
+                HasError = true;
+                return;
+            }
+            HasError = false;
+        } catch (Exception ex) {
+            if (ex.Message == "Session Expired") {
+                AlertService.ShowAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+                await Navigation.NavigateToAsync<LoginViewModel>(true);
+            } else {
+                AlertService.ShowAlert("Technical Difficulties", "Please contact your system administrator for assistance or try again later.", "OK");
+            }
         }
-        HasError = false;
     }
 }

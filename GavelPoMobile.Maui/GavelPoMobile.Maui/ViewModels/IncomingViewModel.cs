@@ -9,6 +9,7 @@ public class IncomingViewModel : BaseViewModel, IQueryAttributable {
     int nextPage = 1;
     int totalPages = 1;
     public IncomingViewModel() {
+        IsLoading = true;
         Title = "Incoming";
         Items = new ObservableCollection<PurchaseOrderData>();
         LoadMoreCommand = new Command(ExecuteLoadMoreCommand);
@@ -17,6 +18,7 @@ public class IncomingViewModel : BaseViewModel, IQueryAttributable {
         ApprovePurchaseOrder = new Command<PurchaseOrderData>(ExecuteApprovePurchaseOrder);
         DisapprovePurchaseOrder = new Command<PurchaseOrderData>(ExecuteDisapprovePurchaseOrder);
         PendingPurchaseOrder = new Command<PurchaseOrderData>(ExecutePendingPurchaseOrder);
+        IsLoading = false;
     }
 
     async void ExecuteOpenPurchaseOrder(PurchaseOrderData purchaseOrder) {
@@ -111,15 +113,17 @@ public class IncomingViewModel : BaseViewModel, IQueryAttributable {
 
 
     ICommand pullToRefreshCommand = null;
+    private bool IsLoading;
+
     public ICommand PullToRefreshCommand {
         get => pullToRefreshCommand;
         set => SetProperty(ref this.pullToRefreshCommand, value);
     }
 
     async void LoadData(int page) {
-        var response = await PurchaseOrderService.GetPurchaseOrderByStatus(0, page, 20);
-
         try {
+            var response = await PurchaseOrderService.GetPurchaseOrderByStatus(0, page, 20);
+
             var pagedPurchaseOrders = JsonConvert.DeserializeObject<PagedPurchaseOrders>(response);
             totalPages = pagedPurchaseOrders.TotalPages;
             foreach (var item in pagedPurchaseOrders.Results) {
@@ -128,8 +132,13 @@ public class IncomingViewModel : BaseViewModel, IQueryAttributable {
                 }
             }
             nextPage++;
-        } catch (Exception) {
-            await Shell.Current.DisplayAlert("Technical Difficulties", "Please ask your system administrator for assistance or try again later.", "OK");
+        } catch (Exception ex) {
+            if (ex.Message == "Session Expired") {
+                AlertService.ShowAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+                await Navigation.NavigateToAsync<LoginViewModel>(true);
+            } else {
+                AlertService.ShowAlert("Technical Difficulties", "Please contact your system administrator for assistance or try again later.", "OK");
+            }
         }
     }
 

@@ -89,9 +89,10 @@ public class OtherPurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributa
 
     private async Task LoadPurchaseOrderDetails(string id) {
         this.id = id;
-        var response = await PurchaseOrderService.GetPurchaseOrderById(Convert.ToInt32(id));
 
         try {
+            var response = await PurchaseOrderService.GetPurchaseOrderById(Convert.ToInt32(id));
+
             var purchaseOrder = JsonConvert.DeserializeObject<PurchaseOrderMasterDetails>(response);
             Title = purchaseOrder.SourceNo;
             switch (purchaseOrder.Status) {
@@ -135,8 +136,13 @@ public class OtherPurchaseOrderDetailsViewModel : BaseViewModel, IQueryAttributa
             foreach (var item in purchaseOrderDetails) {
                 Items.Add(item);
             }
-        } catch (Exception) {
-            await Shell.Current.DisplayAlert("Technical Difficulties", "Please ask your system administrator for assistance or try again later.", "OK");
+        } catch (Exception ex) {
+            if (ex.Message == "Session Expired") {
+                AlertService.ShowAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+                await Navigation.NavigateToAsync<LoginViewModel>(true);
+            } else {
+                AlertService.ShowAlert("Technical Difficulties", "Please contact your system administrator for assistance or try again later.", "OK");
+            }
         }
     }
 }

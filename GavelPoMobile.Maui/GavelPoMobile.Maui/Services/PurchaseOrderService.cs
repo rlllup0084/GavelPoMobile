@@ -3,6 +3,7 @@ using GavelPoMobile.Maui.Common;
 using GavelPoMobile.Maui.Models;
 using GavelPoMobile.Maui.Views;
 using Newtonsoft.Json;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -22,60 +23,58 @@ public class PurchaseOrderService : IPurchaseOrderService {
         var authToken = await SecureStorage.GetAsync("gpo_jwt_token");
 
         if (authToken != null && !JwtTokenValidator.IsTokenValid(authToken)) {
-            await Application.Current.MainPage.DisplayAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
-            await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
-            return null;
+            throw new Exception("Session Expired");
         }
 
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
 
-        var response = await HttpClient.SendAsync(request);
-
-        var responseContent = await response.Content.ReadAsStringAsync();
-
-        return responseContent;
+        try {
+            var response = await HttpClient.SendAsync(request);
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return responseContent;
+        } catch (WebException) {
+            throw new Exception("Server Down");
+        }
     }
 
     public async Task<string> GetPurchaseOrderByStatus(int status, int page, int pageSize) {
-
         var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiUrl}/order/status/{status}?page={page}&pageSize={pageSize}");
 
         var authToken = await SecureStorage.GetAsync("gpo_jwt_token");
 
         if (authToken != null && !JwtTokenValidator.IsTokenValid(authToken)) {
-            await Application.Current.MainPage.DisplayAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
-            await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
-            return null;
+            throw new Exception("Session Expired");
         }
 
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
 
-        var response = await HttpClient.SendAsync(request);
-
-        var responseContent = await response.Content.ReadAsStringAsync();
-
-        return responseContent;
+        try {
+            var response = await HttpClient.SendAsync(request);
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return responseContent;
+        } catch (WebException) {
+            throw new Exception("Server Down");
+        }
     }
 
     public async Task<string> GetPurchaseOrderById(int id) {
-
         var request = new HttpRequestMessage(HttpMethod.Get, $"{_apiUrl}/order/{id}");
 
         var authToken = await SecureStorage.GetAsync("gpo_jwt_token");
 
         if (authToken != null && !JwtTokenValidator.IsTokenValid(authToken)) {
-            await Application.Current.MainPage.DisplayAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
-            await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
-            return null;
+            throw new Exception("Session Expired");
         }
 
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
 
-        var response = await HttpClient.SendAsync(request);
-
-        var responseContent = await response.Content.ReadAsStringAsync();
-
-        return responseContent;
+        try {
+            var response = await HttpClient.SendAsync(request);
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return responseContent;
+        } catch (WebException) {
+            throw new Exception("Server Down");
+        }
     }
 
     public async Task<string> UpdatePurchaseOrderDetailStatus(int id, int status, string remarks) {
@@ -89,21 +88,23 @@ public class PurchaseOrderService : IPurchaseOrderService {
         var authToken = await SecureStorage.GetAsync("gpo_jwt_token");
 
         if (authToken != null && !JwtTokenValidator.IsTokenValid(authToken)) {
-            await Application.Current.MainPage.DisplayAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
-            await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
-            return null;
+            throw new Exception("Session Expired");
         }
 
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
         request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await HttpClient.SendAsync(request);
-        var responseContent = await response.Content.ReadAsStringAsync();
+        try {
+            var response = await HttpClient.SendAsync(request);
+            var responseContent = await response.Content.ReadAsStringAsync();
 
-        if (response.IsSuccessStatusCode) {
-            return string.Empty;
+            if (response.IsSuccessStatusCode) {
+                return string.Empty;
+            }
+
+            return responseContent;
+        } catch (WebException) {
+            throw new Exception("Server Down");
         }
-
-        return responseContent;
     }
 
     public async Task<string> UpdatePurchaseOrderStatus(int id, int status, string remarks) {
@@ -117,18 +118,22 @@ public class PurchaseOrderService : IPurchaseOrderService {
         var authToken = await SecureStorage.GetAsync("gpo_jwt_token");
 
         if (authToken != null && !JwtTokenValidator.IsTokenValid(authToken)) {
-            await Application.Current.MainPage.DisplayAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
-            await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
-            return null;
+            throw new Exception("Session Expired");
         }
 
         HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
         request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await HttpClient.SendAsync(request);
-        var responseContent = await response.Content.ReadAsStringAsync();
-        if (response.IsSuccessStatusCode) {
-            return string.Empty;
+        try {
+            var response = await HttpClient.SendAsync(request);
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode) {
+                return string.Empty;
+            }
+
+            return responseContent;
+        } catch (WebException) {
+            throw new Exception("Server Down");
         }
-        return responseContent;
     }
 }

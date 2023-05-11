@@ -49,6 +49,13 @@ public class LoginViewModel : BaseViewModel {
 
     async void OnLoginClicked() {
         IsAuthInProcess = true;
+        // Check if has internet connection
+        if (!await ConnectivityService.IsConnected()) {
+            IsAuthInProcess = false;
+            ErrorText = "No internet connection";
+            HasError = true;
+            return;
+        }
         var response = await LoginService.Login(userName, password);
         IsAuthInProcess = false;
         

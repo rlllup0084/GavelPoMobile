@@ -118,63 +118,89 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
     }
 
     async void ExecutePendingCommand() {
-        // Pending == 5
-        var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, 5, this.remarks);
-        if (!string.IsNullOrEmpty(response)) {
-            var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
-            ErrorText = errorData.Title;
-            HasError = true;
-            return;
+        try {
+            // Pending == 5
+            var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, 5, this.remarks);
+            if (!string.IsNullOrEmpty(response)) {
+                var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+                ErrorText = errorData.Title;
+                HasError = true;
+                return;
+            }
+            HasError = false;
+            StatusIcon = "pending.png";
+            await Navigation.GoBackAsync(this.id);
+        } catch (Exception ex) {
+            if (ex.Message == "Session Expired") {
+                AlertService.ShowAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+                await Navigation.NavigateToAsync<LoginViewModel>(true);
+            } else {
+                AlertService.ShowAlert("Technical Difficulties", "Please contact your system administrator for assistance or try again later.", "OK");
+            }
         }
-        HasError = false;
-        StatusIcon = "pending.png";
-        await Navigation.GoBackAsync(this.id);
     }
 
     async void ExecuteDisapproveCommand() {
-        // Disapprove == 4
-        if (btnDisapproveText == "Disapprove") {
-            var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, 4, this.remarks);
-            if (!string.IsNullOrEmpty(response)) {
-                var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
-                ErrorText = errorData.Title;
-                HasError = true;
-                return;
+        try {
+            if (btnDisapproveText == "Disapprove") {
+                var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, 4, this.remarks);
+                if (!string.IsNullOrEmpty(response)) {
+                    var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+                    ErrorText = errorData.Title;
+                    HasError = true;
+                    return;
+                }
+                HasError = false;
+                StatusIcon = "disapprove.png";
+                await Navigation.GoBackAsync(this.id);
+            } else if (btnDisapproveText == "Cancel") {
+                Remarks = retRemarks;
+                BtnApproveText = "Approve";
+                BtnDisapproveText = "Disapprove";
             }
-            HasError = false;
-            StatusIcon = "disapprove.png";
-            await Navigation.GoBackAsync(this.id);
-        } else if (btnDisapproveText == "Cancel") {
-            Remarks = retRemarks;
-            BtnApproveText = "Approve";
-            BtnDisapproveText = "Disapprove";
+        } catch (Exception ex) {
+            if (ex.Message == "Session Expired") {
+                AlertService.ShowAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+                await Navigation.NavigateToAsync<LoginViewModel>(true);
+            } else {
+                AlertService.ShowAlert("Technical Difficulties", "Please contact your system administrator for assistance or try again later.", "OK");
+            }
         }
+        
     }
 
     async void ExecuteApproveCommand() {
-        // Approve == 1
-        if (btnApproveText == "Approve") {
-            var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, 1, this.remarks);
-            if (!string.IsNullOrEmpty(response)) {
-                var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
-                ErrorText = errorData.Title;
-                HasError = true;
-                return;
+        try {
+            if (btnApproveText == "Approve") {
+                var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, 1, this.remarks);
+                if (!string.IsNullOrEmpty(response)) {
+                    var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+                    ErrorText = errorData.Title;
+                    HasError = true;
+                    return;
+                }
+                HasError = false;
+                StatusIcon = "approve.png";
+                await Navigation.GoBackAsync(this.id);
+            } else if (btnApproveText == "Save") {
+                var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, this.status, this.remarks);
+                if (!string.IsNullOrEmpty(response)) {
+                    var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
+                    ErrorText = errorData.Title;
+                    HasError = true;
+                    return;
+                }
+                HasError = false;
+                BtnApproveText = "Approve";
+                BtnDisapproveText = "Disapprove";
             }
-            HasError = false;
-            StatusIcon = "approve.png";
-            await Navigation.GoBackAsync(this.id);
-        } else if (btnApproveText == "Save") {
-            var response = await PurchaseOrderService.UpdatePurchaseOrderStatus(this.id, this.status, this.remarks);
-            if (!string.IsNullOrEmpty(response)) {
-                var errorData = JsonConvert.DeserializeObject<ErrorData>(response);
-                ErrorText = errorData.Title;
-                HasError = true;
-                return;
+        } catch (Exception ex) {
+            if (ex.Message == "Session Expired") {
+                AlertService.ShowAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+                await Navigation.NavigateToAsync<LoginViewModel>(true);
+            } else {
+                AlertService.ShowAlert("Technical Difficulties", "Please contact your system administrator for assistance or try again later.", "OK");
             }
-            HasError = false;
-            BtnApproveText = "Approve";
-            BtnDisapproveText = "Disapprove";
         }
     }
 
@@ -183,9 +209,10 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
     }
 
     public async Task LoadPurchaseOrderId(string purchaseOrderId) {
-        var response = await PurchaseOrderService.GetPurchaseOrderById(Convert.ToInt32(purchaseOrderId));
 
         try {
+            var response = await PurchaseOrderService.GetPurchaseOrderById(Convert.ToInt32(purchaseOrderId));
+
             var purchaseOrder = JsonConvert.DeserializeObject<PurchaseOrderMasterDetails>(response);
             Title = purchaseOrder.SourceNo;
             switch (purchaseOrder.Status) {
@@ -219,8 +246,13 @@ public class PurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
             EntryDate = purchaseOrder.EntryDate;
             VendorName = purchaseOrder.VendorName;
             PurchaseOrderDetails.AddRange(purchaseOrder.PurchaseOrderDetails);
-        } catch (Exception) {
-            await Shell.Current.DisplayAlert("Technical Difficulties", "Please ask your system administrator for assistance or try again later.", "OK");
+        } catch (Exception ex) {
+            if (ex.Message == "Session Expired") {
+                AlertService.ShowAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+                await Navigation.NavigateToAsync<LoginViewModel>(true);
+            } else {
+                AlertService.ShowAlert("Technical Difficulties", "Please contact your system administrator for assistance or try again later.", "OK");
+            }
         } finally {
             isLoading = false;
             BtnApproveText = "Approve";

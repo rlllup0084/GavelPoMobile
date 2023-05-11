@@ -100,9 +100,9 @@ public class PendingViewModel : BaseViewModel, IQueryAttributable {
     }
 
     async void LoadData(int page) {
-        var response = await PurchaseOrderService.GetPurchaseOrderByStatus(5, page, 20);
-
         try {
+            var response = await PurchaseOrderService.GetPurchaseOrderByStatus(5, page, 20);
+
             var pagedPurchaseOrders = JsonConvert.DeserializeObject<PagedPurchaseOrders>(response);
             totalPages = pagedPurchaseOrders.TotalPages;
             foreach (var item in pagedPurchaseOrders.Results) {
@@ -111,8 +111,13 @@ public class PendingViewModel : BaseViewModel, IQueryAttributable {
                 }
             }
             nextPage++;
-        } catch (Exception) {
-            await Shell.Current.DisplayAlert("Technical Difficulties", "Please ask your system administrator for assistance or try again later.", "OK");
+        } catch (Exception ex) {
+            if (ex.Message == "Session Expired") {
+                AlertService.ShowAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+                await Navigation.NavigateToAsync<LoginViewModel>(true);
+            } else {
+                AlertService.ShowAlert("Technical Difficulties", "Please contact your system administrator for assistance or try again later.", "OK");
+            }
         }
     }
 

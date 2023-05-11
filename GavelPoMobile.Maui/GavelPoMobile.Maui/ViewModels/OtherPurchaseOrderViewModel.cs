@@ -123,9 +123,9 @@ public class OtherPurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
     }
 
     public async Task LoadPurchaseOrderId(string purchaseOrderId) {
-        var response = await PurchaseOrderService.GetPurchaseOrderById(Convert.ToInt32(purchaseOrderId));
-
         try {
+            var response = await PurchaseOrderService.GetPurchaseOrderById(Convert.ToInt32(purchaseOrderId));
+
             var purchaseOrder = JsonConvert.DeserializeObject<PurchaseOrderMasterDetails>(response);
             Title = purchaseOrder.SourceNo;
             switch (purchaseOrder.Status) {
@@ -159,8 +159,13 @@ public class OtherPurchaseOrderViewModel : BaseViewModel, IQueryAttributable {
             EntryDate = purchaseOrder.EntryDate;
             VendorName = purchaseOrder.VendorName;
             PurchaseOrderDetails.AddRange(purchaseOrder.PurchaseOrderDetails);
-        } catch (Exception) {
-            await Shell.Current.DisplayAlert("Technical Difficulties", "Please ask your system administrator for assistance or try again later.", "OK");
+        } catch (Exception ex) {
+            if (ex.Message == "Session Expired") {
+                AlertService.ShowAlert("Session Expired", "Your session has expired. Please log in again.", "OK");
+                await Navigation.NavigateToAsync<LoginViewModel>(true);
+            } else {
+                AlertService.ShowAlert("Technical Difficulties", "Please contact your system administrator for assistance or try again later.", "OK");
+            }
         } finally {
             isLoading = false;
             BtnApproveText = "Approve";

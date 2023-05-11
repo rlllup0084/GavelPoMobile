@@ -4,6 +4,6 @@ namespace GavelPoMobile.Application.PurchaseOrders.Commands.UpdatePurchaseOrderS
 public class UpdatePurchaseOrderStatusCommandValidator : AbstractValidator<UpdatePurchaseOrderStatusCommand> {
     public UpdatePurchaseOrderStatusCommandValidator() {
         RuleFor(x => x.Id).NotEmpty();
-        RuleFor(x => x.Status).NotEmpty();
+        //RuleFor(x => x.Status).NotEmpty();
     }
 }

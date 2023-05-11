@@ -1,6 +1,4 @@
-﻿using GavelPoMobile.Application.PurchaseOrders.Commands.UpdatePurchaseOrderStatus;
-using GavelPoMobile.Application.PurchaseOrders.Common;
-using GavelPoMobile.Application.PurchaseOrders.Query.GetAllPurchaseOrders;
+﻿using GavelPoMobile.Application.PurchaseOrders.Query.GetAllPurchaseOrders;
 using GavelPoMobile.Application.PurchaseOrders.Query.GetOrdersById;
 using GavelPoMobile.Application.PurchaseOrders.Query.GetPurchaseOrderDetailsById;
 using GavelPoMobile.Application.PurchaseOrders.Query.GetPurchaseOrdersByStatus;
@@ -15,11 +13,11 @@ namespace GavelPoMobile.Api.Common.Mapping;
 public class PurchaseOrderMappingConfig : IRegister {
     public void Register(TypeAdapterConfig config) {
 
-        config.NewConfig<(PurchaseOrderListRequest, int page, int pageSize), GetAllPurchaseOrdersQuery>()
+        config.NewConfig<(int page, int pageSize), GetAllPurchaseOrdersQuery>()
             .Map(dest => dest.Page, src => src.page)
             .Map(dest => dest.PageSize, src => src.pageSize);
 
-        config.NewConfig<(PurchaseOrderListRequest, int status, int page, int pageSize), GetPurchaseOrdersByStatusQuery>()
+        config.NewConfig<(int status, int page, int pageSize), GetPurchaseOrdersByStatusQuery>()
             .Map(dest => dest.Status, src => src.status)
             .Map(dest => dest.Page, src => src.page)
             .Map(dest => dest.PageSize, src => src.pageSize);
@@ -33,9 +31,10 @@ public class PurchaseOrderMappingConfig : IRegister {
         config.NewConfig<(PurchaseOrderDetailRequest, int id), GetPurchaseOrderDetailsByIdQuery>()
             .Map(dest => dest.Id, src => src.id);
 
-        config.NewConfig<PurchaseOrderDetail, PurchaseOrderDetailResponse>();
-
         config.NewConfig<PurchaseOrderDetail, PurchaseOrderDetailResult>()
-            .Map(dest => dest.Id, src => src.OID);
+            .Map(dest => dest.Id, src => src.OID)
+            .Map(dest => dest.GenJournalId, src => src.GenJournalID)
+            .Map(dest => dest.Uom, src => src.Uom)
+            .Map(dest => dest.RequestedBy, src => src.RequestedBy);
     }
 }

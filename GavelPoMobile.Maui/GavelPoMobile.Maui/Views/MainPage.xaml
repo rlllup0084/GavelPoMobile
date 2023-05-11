@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+         xmlns:local="clr-namespace:GavelPoMobile.Maui.Views"
+         Style="{StaticResource ShellStyle}"
+         xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+         ios:Page.UseSafeArea="true"
+        x:Class= "GavelPoMobile.Maui.Views.MainPage">
+    <TabBar>
+        <Tab Title="About" Icon="info">
+            <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" Route= "GavelPoMobile.Maui.Views.AboutPage"  />
+        </Tab>
+        <Tab Title ="Incoming" Icon="incoming">
+            <ShellContent ContentTemplate="{DataTemplate local:IncomingPage}" />
+        </Tab>
+        <Tab Title ="Pending" Icon="pending">
+            <ShellContent ContentTemplate="{DataTemplate local:PendingPage}" />
+        </Tab>
+        <Tab Title ="All" Icon="all">
+            <ShellContent ContentTemplate="{DataTemplate local:HistoryPage}" />
+        </Tab>
+        <Tab Title ="Account" Icon="account">
+            <ShellContent ContentTemplate="{DataTemplate local:AccountPage}" />
+        </Tab>
+    </TabBar>
+    <TabBar>
+        <ShellContent ContentTemplate="{DataTemplate local:LoginPage}"
+                      Route="GavelPoMobile.Maui.Views.LoginPage" />
+    </TabBar>
+</Shell>

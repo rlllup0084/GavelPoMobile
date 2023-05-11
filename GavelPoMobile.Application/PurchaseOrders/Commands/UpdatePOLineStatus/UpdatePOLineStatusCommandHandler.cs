@@ -43,7 +43,7 @@ public class UpdatePOLineStatusCommandHandler :
                                                poDetail.GenJournalID,
                                                poDetail.Description,
                                                poDetail.Quantity,
-                                               poDetail.UOM,
+                                               poDetail.Uom,
                                                poDetail.Cost,
                                                poDetail.CostCenter,
                                                poDetail.RequestedBy,

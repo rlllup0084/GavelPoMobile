@@ -1,0 +1,60 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:demo="clr-namespace:DemoCenter.Maui.Demo"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+    xmlns:models="clr-namespace:DemoCenter.Maui.Models"
+    xmlns:viewmodels="clr-namespace:DemoCenter.Maui.ViewModels"
+    x:DataType="viewmodels:ControlViewModel"
+    x:Class="DemoCenter.Maui.Views.ControlPage"
+    ios:Page.UseSafeArea="False"
+    Title="{Binding Title}"
+    BackgroundColor="{DynamicResource BackgroundThemeColor}">
+    <ContentPage.BindingContext>
+        <viewmodels:ControlViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <dxcv:DXCollectionView x:Name="collectionView"
+                               x:DataType="viewmodels:ControlViewModel"
+                               ItemsSource="{Binding DemoItems}"
+                               SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                               SelectionMode="Single"
+                               BackgroundColor="{DynamicResource BackgroundThemeColor}">
+            <dxcv:DXCollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:DemoItem">
+                    <VerticalStackLayout BackgroundColor="{DynamicResource BackgroundThemeColor}">
+                        <demo:DockLayout Margin="16" StretchLastChild="False" ColumnSpacing="16">
+                            <demo:IconView demo:DockLayout.Dock="Left" VerticalOptions="Start" HeightRequest="42" WidthRequest="42" Icon="{Binding Icon}"/>
+
+                            <demo:DockLayout demo:DockLayout.Dock="Top" StretchLastChild="False">
+                                <demo:IconView demo:DockLayout.Dock="Top" IsVisible="{Binding ShowBadge}" Source="{Binding BadgeIcon}" />
+                                <Label HorizontalOptions="FillAndExpand"
+                                       Margin="0,0,0,6"
+                                       BackgroundColor="Transparent"
+                                       FontSize="Header"
+                                       FontFamily="Roboto-Medium"
+                                       LineBreakMode="NoWrap"
+                                       Text="{Binding ControlsPageTitle}"
+                                       TextColor="{DynamicResource TextThemeColor}"
+                                       VerticalOptions="Start" />
+                            </demo:DockLayout>
+
+                            <Label demo:DockLayout.Dock="Top"
+                                   BackgroundColor="Transparent"
+                                   FontSize="Default"
+                                   LineBreakMode="WordWrap"
+                                   FontFamily="Roboto"
+                                   Style="{DynamicResource ListItemDetailTextStyle}"
+                                   Text="{Binding Description}"
+                                   TextColor="{DynamicResource TextThemeColor}"
+                                   VerticalOptions="Start" />
+                        </demo:DockLayout>
+                        <BoxView Color="{DynamicResource SeparatorColor}" HeightRequest="1" />
+                         
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </dxcv:DXCollectionView.ItemTemplate>
+        </dxcv:DXCollectionView>
+    </ContentPage.Content>
+</ContentPage>

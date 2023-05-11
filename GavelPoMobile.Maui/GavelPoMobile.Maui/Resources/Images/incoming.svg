@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<svg viewBox="-2 -2 32 32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="Layer_1" transform="translate(-2.00000095367432, -2.00000190734863)" style="enable-background:new 0 0 32 32">
+    <g id="ShoppingCart">
+      <circle cx="13" cy="27" r="3" fill="#727272" class="Black" />
+    </g>
+  </g>
+  <g id="Layer_1" transform="translate(-2, -2)" style="enable-background:new 0 0 32 32">
+    <g id="ShoppingCart">
+      <path d="M16.3, 18L24.2, 18C24.6, 18 24.9, 17.8 25.1, 17.5L29.9, 9.5C30.3, 8.8 29.8, 8 29, 8L10.4, 8L6.8, 2L6.8, 2L2, 2L2, 4L5.7, 4L13.5, 17.2L10.6, 20L10.2, 20.4C9.7, 21 10.1, 22 11, 22L11.5, 22L28, 22L28, 20L13.5, 20L15.5, 18L16.3, 18z" fill="#727272" class="Black" />
+    </g>
+  </g>
+  <g id="Layer_1" transform="translate(-2.00000190734863, -2.00000190734863)" style="enable-background:new 0 0 32 32">
+    <g id="ShoppingCart">
+      <circle cx="25" cy="27" r="3" fill="#727272" class="Black" />
+    </g>
+  </g>
+</svg>

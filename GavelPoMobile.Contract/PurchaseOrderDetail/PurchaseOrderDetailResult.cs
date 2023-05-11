@@ -5,7 +5,7 @@ public record PurchaseOrderDetailResult(
     int? GenJournalId,
     string Description,
     decimal? Quantity,
-    string UOM,
+    string? Uom,
     decimal? Cost,
     string CostCenter,
     string RequestedBy,

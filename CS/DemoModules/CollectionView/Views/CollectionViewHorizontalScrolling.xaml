@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<demo:DemoPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:demo="clr-namespace:DemoCenter.Maui.Demo"
+             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
+             x:Class="DemoCenter.Maui.DemoModules.CollectionView.Views.CollectionViewHorizontalScrolling"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="False">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="itemTemplate">
+            <demo:DockLayout Margin="8" WidthRequest="300" RowSpacing="8">
+                <Image demo:DockLayout.Dock="Top" Margin="1" HeightRequest="200" Source="{Binding ImageSource}" Aspect="Fill"/>
+
+                <Label demo:DockLayout.Dock="Top"
+                       Text="{Binding Price, StringFormat='${0:N0}'}"
+                       TextColor="{DynamicResource AccentColor}"
+                       FontAttributes="Bold"
+                       FontSize="{OnIdiom Phone=16, Tablet=18}"/>
+                <Label demo:DockLayout.Dock="Top"
+                       Text="{Binding Address}"
+                       TextColor="{DynamicResource CollectionViewBoldGrayFontColor}"
+                       FontAttributes="Bold"
+                       FontSize="{OnIdiom Phone=16, Tablet=18}"/>
+                <demo:ScrollViewFix Orientation="Vertical" HorizontalScrollBarVisibility="Never">
+                    <Label Text="{Binding Description}"
+                           TextColor="{DynamicResource CollectionViewItemFontColor}"
+                           FontSize="{OnIdiom Phone=14, Tablet=16}"/>
+                </demo:ScrollViewFix>
+            </demo:DockLayout>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid BackgroundColor="{DynamicResource BackgroundThemeColor}">
+            <dxcv:DXCollectionView x:Name="collectionView"
+                                   Orientation="Horizontal"
+                                   ItemsSource="{Binding ItemSource}"
+                                   ItemTemplate="{StaticResource Key=itemTemplate}"
+                                   Margin="8">
+            </dxcv:DXCollectionView>
+        </Grid>
+    </ContentPage.Content>
+</demo:DemoPage>

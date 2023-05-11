@@ -27,7 +27,7 @@ public class GetPurchaseOrderDetailsByIdQueryHandler : IRequestHandler<GetPurcha
                             o.GenJournalID,
                             o.Description,
                             o.Quantity,
-                            o.UOM,
+                            o.Uom,
                             o.Cost,
                             o.CostCenter,
                             o.RequestedBy,

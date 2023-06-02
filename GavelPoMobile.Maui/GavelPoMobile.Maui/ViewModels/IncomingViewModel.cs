@@ -9,7 +9,6 @@ public class IncomingViewModel : BaseViewModel, IQueryAttributable {
     int nextPage = 1;
     int totalPages = 1;
     public IncomingViewModel() {
-        IsLoading = true;
         Title = "Incoming";
         Items = new ObservableCollection<PurchaseOrderData>();
         LoadMoreCommand = new Command(ExecuteLoadMoreCommand);
@@ -18,7 +17,6 @@ public class IncomingViewModel : BaseViewModel, IQueryAttributable {
         ApprovePurchaseOrder = new Command<PurchaseOrderData>(ExecuteApprovePurchaseOrder);
         DisapprovePurchaseOrder = new Command<PurchaseOrderData>(ExecuteDisapprovePurchaseOrder);
         PendingPurchaseOrder = new Command<PurchaseOrderData>(ExecutePendingPurchaseOrder);
-        IsLoading = false;
     }
 
     async void ExecuteOpenPurchaseOrder(PurchaseOrderData purchaseOrder) {
@@ -113,7 +111,6 @@ public class IncomingViewModel : BaseViewModel, IQueryAttributable {
 
 
     ICommand pullToRefreshCommand = null;
-    private bool IsLoading;
 
     public ICommand PullToRefreshCommand {
         get => pullToRefreshCommand;

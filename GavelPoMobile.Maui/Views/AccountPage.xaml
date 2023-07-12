@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GavelPoMobile.Maui.Views.AccountPage"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:dxe="clr-namespace:DevExpress.Maui.Editors;assembly=DevExpress.Maui.Editors"
+             xmlns:dxdf="clr-namespace:DevExpress.Maui.DataForm;assembly=DevExpress.Maui.Editors"
+             xmlns:viewModels="clr-namespace:GavelPoMobile.Maui.ViewModels"
+             ios:Page.UseSafeArea="False">
+    <ContentPage.BindingContext>
+        <viewModels:AccountViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <Style TargetType="dxe:MultilineEdit">
+            <Setter Property="ClearIconVisibility" Value="Never" />
+        </Style>
+        <Style TargetType="dxe:TextEdit">
+            <Setter Property="ClearIconVisibility" Value="Never" />
+        </Style>
+
+        <Style TargetType="dxdf:DataFormView">
+            <Setter Property="IsAutoGenerationEnabled" Value="False" />
+            <Setter Property="EditorLabelFontAttributes" Value="Bold"/>
+            <Setter Property="EditorLabelFontFamily" Value="Roboto"/>
+            <Setter Property="ContentPadding" Value="0"/>
+            <Setter Property="EditorLabelFontSize" Value="{StaticResource EditorLabelFontSize}">
+
+            </Setter>
+            <Setter Property="EditorLabelWidth" Value="{OnIdiom Phone='*', Tablet='90'}"/>
+            <Setter Property="EditorPadding" Value="{OnIdiom Phone='0,5', Tablet='0,10'}"/>
+            <Setter Property="EditorHorizontalSpacing" Value="{StaticResource EditorHorizontalSpacing}">
+
+            </Setter>
+            <Setter Property="EditorLabelPosition">
+                <Setter.Value>
+                    <OnIdiom x:TypeArguments="dxdf:DataFormLabelPosition" Phone="Top" Tablet="Left"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="CommitMode" Value="Manually" />
+            <Setter Property="ValidationMode" Value="LostFocus" />
+            <!--<Setter Property="DataObject" Value="{Binding Model}" />-->
+            <Setter Property="EditorBoxMode" Value="Outlined" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+    </ContentPage.Resources>
+    <Grid BackgroundColor="{DynamicResource BackgroundThemeColor}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="{OnIdiom Phone='3*', Tablet='1*'}"/>
+            <ColumnDefinition Width="0.1*"/>
+        </Grid.ColumnDefinitions>
+    </Grid>
+</ContentPage>
